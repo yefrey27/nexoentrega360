@@ -1,0 +1,192 @@
+commit base: 8590742bc291413a40a103c75619deb563dbe0bd
+fecha UTC: 2026-10-14T07:52:39Z
+comando: cd apps/api && npm test
+
+> nexoentrega-api@0.1.0 test
+> node --test --test-concurrency=1 test/*.test.js
+
+{"ts":"2026-10-14T07:52:04.444Z","level":"info","correlationId":"90ae6be2-d0f9-412e-8b2b-919b0b5e3517","method":"POST","path":"/auth/login","status":200,"ms":632}
+{"ts":"2026-10-14T07:52:04.489Z","level":"info","correlationId":"925287b7-0fd9-483b-93ab-6c391e982c7a","method":"GET","path":"/requests","status":200,"ms":22,"userId":"9ed797ca-8fa6-4217-98f3-48f85c69496a"}
+{"ts":"2026-10-14T07:52:04.522Z","level":"info","correlationId":"8704faee-8476-48a5-9f79-83cf7d69f1ac","method":"GET","path":"/requests","status":200,"ms":18,"userId":"9ed797ca-8fa6-4217-98f3-48f85c69496a"}
+{"ts":"2026-10-14T07:52:04.553Z","level":"info","correlationId":"860d0eea-d038-43bb-8dfd-63ff7d9d76fb","method":"POST","path":"/ai/summaries","status":200,"ms":21,"userId":"9ed797ca-8fa6-4217-98f3-48f85c69496a"}
+✔ IA AI-VALID: origen ai, intento ok, inventario y estados intactos (1137.6101ms)
+{"ts":"2026-10-14T07:52:05.236Z","level":"info","correlationId":"21f9477b-e7fb-4d17-b3e1-239f0c393956","method":"POST","path":"/auth/login","status":200,"ms":473}
+{"ts":"2026-10-14T07:52:05.251Z","level":"info","correlationId":"b62ac3db-c7a9-49ab-8758-86012bc334e3","method":"GET","path":"/requests","status":200,"ms":12,"userId":"b164f47a-db7b-49e2-b7d9-349dfa5be2c5"}
+{"ts":"2026-10-14T07:52:05.265Z","level":"info","correlationId":"80332bfe-ad16-46ca-84dc-b839622a21a0","method":"GET","path":"/requests","status":200,"ms":9,"userId":"b164f47a-db7b-49e2-b7d9-349dfa5be2c5"}
+{"ts":"2026-10-14T07:52:05.283Z","level":"info","correlationId":"0643cf98-cb62-4757-b5cc-7e911ed1116b","method":"POST","path":"/ai/summaries","status":200,"ms":13,"userId":"b164f47a-db7b-49e2-b7d9-349dfa5be2c5"}
+✔ IA AI-JSON-BAD: origen fallback, intento invalid_output, inventario y estados intactos (720.3542ms)
+{"ts":"2026-10-14T07:52:05.899Z","level":"info","correlationId":"eee25280-4ec9-452a-9ecf-b29413f767a1","method":"POST","path":"/auth/login","status":200,"ms":461}
+{"ts":"2026-10-14T07:52:05.917Z","level":"info","correlationId":"fe103dd3-4b52-4c2f-9e34-96dbfd6e6610","method":"GET","path":"/requests","status":200,"ms":13,"userId":"5b8b276d-4c87-4e80-99f4-edf437b5391a"}
+{"ts":"2026-10-14T07:52:05.930Z","level":"info","correlationId":"c3ac366e-0bc9-4025-9cfe-85197a6cc478","method":"GET","path":"/requests","status":200,"ms":9,"userId":"5b8b276d-4c87-4e80-99f4-edf437b5391a"}
+{"ts":"2026-10-14T07:52:05.951Z","level":"info","correlationId":"af06be98-26a5-4894-8f63-bb21090f39f9","method":"POST","path":"/ai/summaries","status":200,"ms":17,"userId":"5b8b276d-4c87-4e80-99f4-edf437b5391a"}
+✔ IA AI-EXTRA: origen fallback, intento invalid_output, inventario y estados intactos (664.0786ms)
+{"ts":"2026-10-14T07:52:06.544Z","level":"info","correlationId":"371e9d0c-eabb-4d91-a257-9a7d9e063aec","method":"POST","path":"/auth/login","status":200,"ms":435}
+{"ts":"2026-10-14T07:52:06.558Z","level":"info","correlationId":"49b23851-d5d2-409b-a817-9bed63c8e935","method":"GET","path":"/requests","status":200,"ms":12,"userId":"de70eef6-2d24-4521-af8d-c7b0b4adda87"}
+{"ts":"2026-10-14T07:52:06.569Z","level":"info","correlationId":"3af914b7-e917-4891-8f22-e044489eea92","method":"GET","path":"/requests","status":200,"ms":7,"userId":"de70eef6-2d24-4521-af8d-c7b0b4adda87"}
+{"ts":"2026-10-14T07:52:06.582Z","level":"info","correlationId":"7c1877ee-02db-4864-bc80-0c9aa78e32af","method":"POST","path":"/ai/summaries","status":200,"ms":9,"userId":"de70eef6-2d24-4521-af8d-c7b0b4adda87"}
+✔ IA AI-FOREIGN-ID: origen fallback, intento invalid_output, inventario y estados intactos (631.0154ms)
+{"ts":"2026-10-14T07:52:07.302Z","level":"info","correlationId":"9d42493c-ec0c-486a-8aa9-f8f8599694ae","method":"POST","path":"/auth/login","status":200,"ms":512}
+{"ts":"2026-10-14T07:52:07.316Z","level":"info","correlationId":"959f2fd5-8e64-43bb-9866-d84a9ced7c83","method":"GET","path":"/requests","status":200,"ms":12,"userId":"09df6ee3-a732-411a-a103-deb4dd0821b2"}
+{"ts":"2026-10-14T07:52:07.327Z","level":"info","correlationId":"4a7feff2-9918-4094-9b87-516034c8bac7","method":"GET","path":"/requests","status":200,"ms":9,"userId":"09df6ee3-a732-411a-a103-deb4dd0821b2"}
+{"ts":"2026-10-14T07:52:07.342Z","level":"info","correlationId":"ac9417c4-d833-4509-9b35-5cb34d8dc1ce","method":"POST","path":"/ai/summaries","status":200,"ms":10,"userId":"09df6ee3-a732-411a-a103-deb4dd0821b2"}
+✔ IA AI-INJECTION: origen fallback, intento invalid_output, inventario y estados intactos (760.4397ms)
+{"ts":"2026-10-14T07:52:07.941Z","level":"info","correlationId":"94209438-addc-40a3-ad51-b6a020425a68","method":"POST","path":"/auth/login","status":200,"ms":449}
+{"ts":"2026-10-14T07:52:07.954Z","level":"info","correlationId":"a1c0f59b-7eb6-476e-a32b-d28051e25266","method":"GET","path":"/requests","status":200,"ms":11,"userId":"009b5c49-e7a8-48fa-930f-cae547fd3fcb"}
+{"ts":"2026-10-14T07:52:07.964Z","level":"info","correlationId":"f48983b3-2b5c-41f6-a932-c6eeeec486f5","method":"GET","path":"/requests","status":200,"ms":8,"userId":"009b5c49-e7a8-48fa-930f-cae547fd3fcb"}
+{"ts":"2026-10-14T07:52:08.291Z","level":"info","correlationId":"c48d2386-48f2-4ca1-8876-9160433cd7b8","method":"POST","path":"/ai/summaries","status":200,"ms":322,"userId":"009b5c49-e7a8-48fa-930f-cae547fd3fcb"}
+✔ IA AI-TIMEOUT: origen fallback, intento timeout, inventario y estados intactos (946.3225ms)
+{"ts":"2026-10-14T07:52:08.889Z","level":"info","correlationId":"0d496234-0c8d-4f4e-8ff6-949626f99828","method":"POST","path":"/auth/login","status":200,"ms":454}
+{"ts":"2026-10-14T07:52:08.902Z","level":"info","correlationId":"a94e2a66-c5aa-454b-bb56-cf2f1e2eb310","method":"GET","path":"/requests","status":200,"ms":9,"userId":"a23e53b6-f791-4a41-b67c-7792ae8f8188"}
+{"ts":"2026-10-14T07:52:08.913Z","level":"info","correlationId":"baad5dc7-cf08-4ee5-aa18-9002bbfb0ffe","method":"GET","path":"/requests","status":200,"ms":8,"userId":"a23e53b6-f791-4a41-b67c-7792ae8f8188"}
+{"ts":"2026-10-14T07:52:08.928Z","level":"info","correlationId":"cfe40de2-d87b-41c2-8b30-d422e2ca0e57","method":"POST","path":"/ai/summaries","status":200,"ms":10,"userId":"a23e53b6-f791-4a41-b67c-7792ae8f8188"}
+✔ IA AI-ERROR: origen fallback, intento provider_error, inventario y estados intactos (637.7901ms)
+{"ts":"2026-10-14T07:52:09.554Z","level":"info","correlationId":"29a9c471-6bd6-4bfc-94ed-2986fa7095ec","method":"POST","path":"/auth/login","status":200,"ms":464}
+{"ts":"2026-10-14T07:52:09.567Z","level":"info","correlationId":"fa6c243b-4299-4995-b7ed-91ce75dfa8ce","method":"GET","path":"/requests","status":200,"ms":11,"userId":"57f98828-fbf8-46a5-9f5a-b37d77fdcd46"}
+{"ts":"2026-10-14T07:52:09.577Z","level":"info","correlationId":"889ee291-5b9d-4c38-8f41-5ef76bd05fb0","method":"GET","path":"/requests","status":200,"ms":7,"userId":"57f98828-fbf8-46a5-9f5a-b37d77fdcd46"}
+{"ts":"2026-10-14T07:52:09.590Z","level":"info","correlationId":"16bf3e07-d482-41c4-ae73-5fc2865f400c","method":"POST","path":"/ai/summaries","status":200,"ms":10,"userId":"57f98828-fbf8-46a5-9f5a-b37d77fdcd46"}
+✔ IA AI-DUPLICATE-ID: origen fallback, intento invalid_output, inventario y estados intactos (663.2705ms)
+{"ts":"2026-10-14T07:52:10.570Z","level":"info","correlationId":"39db317e-0f70-4677-8b05-9347240eb7e0","method":"POST","path":"/auth/login","status":200,"ms":822}
+{"ts":"2026-10-14T07:52:10.604Z","level":"info","correlationId":"08eabb8f-0136-4ebb-8a73-cdd3086a833e","method":"GET","path":"/requests","status":200,"ms":31,"userId":"21284f4d-2a78-4f07-815b-8ebce0df9810"}
+{"ts":"2026-10-14T07:52:10.620Z","level":"info","correlationId":"09afe6a9-3233-43f0-b936-59308320db4b","method":"GET","path":"/requests","status":200,"ms":12,"userId":"21284f4d-2a78-4f07-815b-8ebce0df9810"}
+{"ts":"2026-10-14T07:52:10.639Z","level":"info","correlationId":"3d7e4f1a-50d1-4f17-b60f-603632c96e61","method":"POST","path":"/ai/summaries","status":200,"ms":14,"userId":"21284f4d-2a78-4f07-815b-8ebce0df9810"}
+✔ IA: instrucciones maliciosas en observaciones se tratan como dato, no como orden (1051.3422ms)
+{"ts":"2026-10-14T07:52:11.631Z","level":"info","correlationId":"214cf27f-b490-40cf-99ad-edd0e2fe64cd","method":"POST","path":"/auth/login","status":200,"ms":458}
+{"ts":"2026-10-14T07:52:12.063Z","level":"info","correlationId":"454a2d96-4ad6-466f-9e72-4fb0e5bf15a2","method":"POST","path":"/auth/login","status":200,"ms":429}
+{"ts":"2026-10-14T07:52:12.077Z","level":"info","correlationId":"460727de-6bb5-477d-a68d-448ca39d00b1","method":"GET","path":"/requests","status":200,"ms":11,"userId":"d2851613-576e-44ed-9818-54812533a263"}
+{"ts":"2026-10-14T07:52:12.090Z","level":"info","correlationId":"78647867-69a7-4ebe-b647-23e1f57535a6","method":"POST","path":"/ai/summaries","status":404,"ms":6,"userId":"146d64af-d123-4b14-ade7-746fc6b44812"}
+✔ IA: ID de otra organización responde 404 y no invoca al proveedor ni guarda intento (1437.3529ms)
+{"ts":"2026-10-14T07:52:12.981Z","level":"info","correlationId":"692514e2-f950-44d1-b798-897b82d17988","method":"PUT","path":"/requests/00000000-0000-4000-8000-000000000000","status":401,"ms":41}
+✔ PUT sin sesión responde 401 (183.0912ms)
+{"ts":"2026-10-14T07:52:13.814Z","level":"info","correlationId":"b24c788f-7a6c-49f6-85ca-51d5cc920f41","method":"POST","path":"/auth/login","status":200,"ms":523}
+{"ts":"2026-10-14T07:52:13.877Z","level":"info","correlationId":"082a3428-77a8-4bd7-9c03-763111816a56","method":"POST","path":"/requests","status":201,"ms":50,"userId":"3ba741da-a8c2-4ace-ba4c-f50c9dbcbc46"}
+{"ts":"2026-10-14T07:52:13.922Z","level":"info","correlationId":"71765b97-f604-4072-b08e-e8f37a0b37f4","method":"PUT","path":"/requests/81ad6c61-0357-4de2-82bb-0a24ff312d54","status":200,"ms":26,"userId":"3ba741da-a8c2-4ace-ba4c-f50c9dbcbc46"}
+✔ el solicitante edita su borrador: cambian los datos y las líneas, el estado y el inventario no (938.9072ms)
+{"ts":"2026-10-14T07:52:14.718Z","level":"info","correlationId":"a858a885-a609-4612-8f16-33f16c89dbdd","method":"POST","path":"/auth/login","status":200,"ms":428}
+{"ts":"2026-10-14T07:52:14.747Z","level":"info","correlationId":"1cebb1b5-b60e-4a67-a707-78719c99e466","method":"POST","path":"/requests","status":201,"ms":24,"userId":"341d0e45-41b0-479c-b811-8a4515815b9d"}
+{"ts":"2026-10-14T07:52:14.763Z","level":"info","correlationId":"3a1912e9-6419-4425-b43d-907c60500e17","method":"PUT","path":"/requests/46d1483a-1517-42f2-ba0d-634943d6fe76","status":422,"ms":10,"userId":"341d0e45-41b0-479c-b811-8a4515815b9d"}
+✔ edición con cantidad 0: 422 y el borrador queda como estaba (831.8774ms)
+{"ts":"2026-10-14T07:52:15.357Z","level":"info","correlationId":"7734344e-0566-444f-8af1-5b85ff13f69b","method":"POST","path":"/auth/login","status":200,"ms":434}
+{"ts":"2026-10-14T07:52:15.385Z","level":"info","correlationId":"3d2f8b09-c657-474b-820b-4f5fa23ec04a","method":"POST","path":"/requests","status":201,"ms":23,"userId":"327bb6ae-9bef-432d-83a3-d29205913ae6"}
+{"ts":"2026-10-14T07:52:15.476Z","level":"info","correlationId":"e0e293e4-d0cb-4412-b8a6-29fd7be0b791","method":"POST","path":"/requests/5ccae8aa-166c-48d6-a41a-5b28ed037147/submit","status":200,"ms":85,"userId":"327bb6ae-9bef-432d-83a3-d29205913ae6"}
+{"ts":"2026-10-14T07:52:15.490Z","level":"info","correlationId":"0337e46b-d321-4311-9628-93e0120336ab","method":"PUT","path":"/requests/5ccae8aa-166c-48d6-a41a-5b28ed037147","status":409,"ms":9,"userId":"327bb6ae-9bef-432d-83a3-d29205913ae6"}
+✔ una solicitud ENVIADA no se edita: 409 sin cambios (724.7462ms)
+{"ts":"2026-10-14T07:52:16.101Z","level":"info","correlationId":"66a4076c-364d-4bd0-973c-ed0d87ab25fb","method":"POST","path":"/auth/login","status":200,"ms":457}
+{"ts":"2026-10-14T07:52:16.544Z","level":"info","correlationId":"155b766c-8867-4107-9e38-c74ed4e78f53","method":"POST","path":"/auth/login","status":200,"ms":440}
+{"ts":"2026-10-14T07:52:17.014Z","level":"info","correlationId":"76ae1655-d3ba-4ba5-a93b-800531c7c83c","method":"POST","path":"/auth/login","status":200,"ms":468}
+{"ts":"2026-10-14T07:52:17.041Z","level":"info","correlationId":"1cda89eb-2467-4bc0-b78d-4c39c2dcce06","method":"POST","path":"/requests","status":201,"ms":24,"userId":"ee84818a-6e89-46dc-82dd-08d4348a3a01"}
+{"ts":"2026-10-14T07:52:17.049Z","level":"info","correlationId":"fcc8ee4a-bdf6-4163-a726-bbd0c28e7883","method":"PUT","path":"/requests/7901b9ec-0b21-4c97-9712-c9e18b16c024","status":403,"ms":4,"userId":"504efecb-f1f0-4eaa-8c61-7c778be71932"}
+{"ts":"2026-10-14T07:52:17.059Z","level":"info","correlationId":"367f267e-43e1-4580-a081-8b5d715da841","method":"PUT","path":"/requests/7901b9ec-0b21-4c97-9712-c9e18b16c024","status":404,"ms":7,"userId":"c7d02221-3d6d-464d-8166-547f75533018"}
+✔ seguridad: el coordinador recibe 403 y el solicitante de ORG-B recibe 404, sin cambios (1569.0617ms)
+{"ts":"2026-10-14T07:52:18.170Z","level":"info","correlationId":"47806e76-6765-49c0-b956-a8b0e656d189","method":"GET","path":"/requests","status":401,"ms":24}
+✔ sin sesión responde 401 (280.402ms)
+{"ts":"2026-10-14T07:52:19.088Z","level":"info","correlationId":"d1c14cb9-da35-49fd-94e1-09c47d080966","method":"POST","path":"/auth/login","status":200,"ms":586}
+{"ts":"2026-10-14T07:52:19.135Z","level":"info","correlationId":"62f271e1-8c02-4498-b45d-4caed4e7f97c","method":"GET","path":"/requests","status":200,"ms":34,"userId":"24318fac-3a6a-4c2a-9374-e8ac1c112f91"}
+{"ts":"2026-10-14T07:52:19.166Z","level":"info","correlationId":"14c8fdd0-84dc-4915-9f9b-58f646ee5376","method":"GET","path":"/requests","status":200,"ms":14,"userId":"24318fac-3a6a-4c2a-9374-e8ac1c112f91"}
+{"ts":"2026-10-14T07:52:19.237Z","level":"info","correlationId":"7abff13c-32a6-4d43-b6a8-aafbebd10468","method":"POST","path":"/requests/a0e3eef0-6e14-4b1e-88a8-24a808a83aca/reserve","status":200,"ms":60,"userId":"24318fac-3a6a-4c2a-9374-e8ac1c112f91"}
+{"ts":"2026-10-14T07:52:19.391Z","level":"info","correlationId":"18a5740f-38fe-4a7f-8e51-6a7d88f039db","method":"POST","path":"/requests/0749c8c6-7cac-4c65-ad7f-abf7cffa58b9/reserve","status":409,"ms":211,"userId":"24318fac-3a6a-4c2a-9374-e8ac1c112f91"}
+{"ts":"2026-10-14T07:52:20.124Z","level":"info","correlationId":"a3e30ee5-c89c-4c0a-a5b9-1ab224095a0b","method":"POST","path":"/auth/login","status":200,"ms":716}
+{"ts":"2026-10-14T07:52:20.144Z","level":"info","correlationId":"998775c5-f21c-453c-9200-627b4a0d7093","method":"GET","path":"/requests","status":200,"ms":16,"userId":"cbe5a7f0-6228-40cb-9b96-d0dabf19e46f"}
+{"ts":"2026-10-14T07:52:20.189Z","level":"info","correlationId":"fdbe09d6-dfc0-4bf4-8ada-d48a58878f64","method":"POST","path":"/requests/a0e3eef0-6e14-4b1e-88a8-24a808a83aca/cancel","status":200,"ms":36,"userId":"cbe5a7f0-6228-40cb-9b96-d0dabf19e46f"}
+✔ A-001 contra A-002 en paralelo: una reserva y un 409; 10/7/3; cancelar libera (2003.7461ms)
+{"ts":"2026-10-14T07:52:20.945Z","level":"info","correlationId":"28cbcae7-b84f-41ff-b574-a4bdf24d2739","method":"POST","path":"/auth/login","status":200,"ms":505}
+{"ts":"2026-10-14T07:52:21.514Z","level":"info","correlationId":"976f5267-de54-439f-8f1e-35d6028a23dd","method":"POST","path":"/auth/login","status":200,"ms":565}
+{"ts":"2026-10-14T07:52:22.012Z","level":"info","correlationId":"851e15dc-6720-4a76-86b2-5a7da6f392dd","method":"POST","path":"/auth/login","status":200,"ms":493}
+{"ts":"2026-10-14T07:52:22.545Z","level":"info","correlationId":"8fe91ec1-7c1e-49c6-8ee9-cc7cfa856162","method":"POST","path":"/auth/login","status":200,"ms":529}
+{"ts":"2026-10-14T07:52:22.580Z","level":"info","correlationId":"e058b7d6-a4a6-4d8c-acd7-c047ec29cbeb","method":"POST","path":"/requests","status":201,"ms":28,"userId":"9dc9c570-72d8-4431-8a66-68f961519195"}
+{"ts":"2026-10-14T07:52:22.669Z","level":"info","correlationId":"be927ca2-c99d-4dc2-942d-0bb716930702","method":"POST","path":"/requests/514bc399-2ee5-4eb1-9578-7095ca55f773/submit","status":200,"ms":86,"userId":"9dc9c570-72d8-4431-8a66-68f961519195"}
+{"ts":"2026-10-14T07:52:22.707Z","level":"info","correlationId":"188995cd-d1eb-4015-b776-1b5ad3c18b75","method":"POST","path":"/requests/514bc399-2ee5-4eb1-9578-7095ca55f773/reserve","status":200,"ms":34,"userId":"0902a1df-2d28-4544-a379-fa8f2daecd6f"}
+{"ts":"2026-10-14T07:52:22.727Z","level":"info","correlationId":"46ed0671-9179-4ed4-ad82-bb54aa6c355d","method":"POST","path":"/requests/514bc399-2ee5-4eb1-9578-7095ca55f773/reserve","status":200,"ms":16,"userId":"0902a1df-2d28-4544-a379-fa8f2daecd6f"}
+{"ts":"2026-10-14T07:52:22.749Z","level":"info","correlationId":"3889d2ac-82af-4264-9984-5b49282fa72d","method":"GET","path":"/requests","status":200,"ms":10,"userId":"0902a1df-2d28-4544-a379-fa8f2daecd6f"}
+{"ts":"2026-10-14T07:52:22.762Z","level":"info","correlationId":"5244f89b-e7b0-4279-a704-33dae783693a","method":"POST","path":"/requests/bb024643-8f14-4e5d-90ff-a6f1d157f9a7/reserve","status":409,"ms":9,"userId":"0902a1df-2d28-4544-a379-fa8f2daecd6f"}
+{"ts":"2026-10-14T07:52:22.781Z","level":"info","correlationId":"8008de11-0c9d-467d-b05b-5358f4ea89bd","method":"POST","path":"/requests/514bc399-2ee5-4eb1-9578-7095ca55f773/reserve","status":409,"ms":16,"userId":"0902a1df-2d28-4544-a379-fa8f2daecd6f"}
+{"ts":"2026-10-14T07:52:22.802Z","level":"info","correlationId":"e94fa878-7662-44a0-ac83-16c627974f81","method":"POST","path":"/requests/514bc399-2ee5-4eb1-9578-7095ca55f773/dispatch","status":200,"ms":18,"userId":"f9049a62-7173-40c7-aa57-b8fb54cb83e2"}
+{"ts":"2026-10-14T07:52:22.871Z","level":"info","correlationId":"4bd99e5e-55d0-44d2-ae0e-1b7c6e949bf0","method":"POST","path":"/requests/514bc399-2ee5-4eb1-9578-7095ca55f773/deliver","status":200,"ms":63,"userId":"0902a1df-2d28-4544-a379-fa8f2daecd6f"}
+{"ts":"2026-10-14T07:52:22.893Z","level":"info","correlationId":"63b30c39-c0b9-473d-85e1-dbb0e65332b7","method":"GET","path":"/audit-events","status":200,"ms":12,"userId":"c9b32b1d-22af-4647-99ac-69fac4e83752"}
+{"ts":"2026-10-14T07:52:22.910Z","level":"info","correlationId":"d1cc67c8-6b23-43cb-b519-918d9a0e64aa","method":"GET","path":"/dashboard","status":200,"ms":11,"userId":"c9b32b1d-22af-4647-99ac-69fac4e83752"}
+✔ flujo completo, idempotencia y auditoría (2719.3122ms)
+{"ts":"2026-10-14T07:52:23.582Z","level":"info","correlationId":"c794f4c7-0c26-426c-8969-529335073d01","method":"POST","path":"/auth/login","status":200,"ms":499}
+{"ts":"2026-10-14T07:52:24.304Z","level":"info","correlationId":"3bcc32e7-6b94-4281-99f3-a48dddfa3fec","method":"POST","path":"/auth/login","status":200,"ms":717}
+{"ts":"2026-10-14T07:52:25.192Z","level":"info","correlationId":"bd7c4c4d-213b-4b3c-ae40-fb53e6355ccc","method":"POST","path":"/auth/login","status":200,"ms":884}
+{"ts":"2026-10-14T07:52:25.955Z","level":"info","correlationId":"74bea7ca-ff07-4b14-a5bc-d38edccde813","method":"POST","path":"/auth/login","status":200,"ms":752}
+{"ts":"2026-10-14T07:52:25.971Z","level":"info","correlationId":"5ec9de77-f0f5-402a-bc3a-3c7563428b2b","method":"GET","path":"/requests","status":200,"ms":13,"userId":"eee6ba27-ffb1-4d2d-b4eb-8b9dba675a86"}
+{"ts":"2026-10-14T07:52:25.982Z","level":"info","correlationId":"816fc06b-6ac9-4e6b-a8a9-da5f08959958","method":"GET","path":"/requests/3f32660a-3882-4663-8bb1-561b6eea6d95","status":404,"ms":8,"userId":"c39b167d-7b4a-4696-b531-b7c57a0b2158"}
+{"ts":"2026-10-14T07:52:25.993Z","level":"info","correlationId":"f20aa702-35f4-4ea7-9985-8069a23e67bd","method":"GET","path":"/audit-events","status":200,"ms":7,"userId":"ff33e33c-3f28-4d12-9198-47b0d3251b1f"}
+{"ts":"2026-10-14T07:52:26.000Z","level":"info","correlationId":"d24d9f95-8533-479d-a12b-df3ca59738f6","method":"POST","path":"/requests/3f32660a-3882-4663-8bb1-561b6eea6d95/reserve","status":404,"ms":4,"userId":"c39b167d-7b4a-4696-b531-b7c57a0b2158"}
+{"ts":"2026-10-14T07:52:26.009Z","level":"info","correlationId":"15bb62c6-b94b-4e0f-9f9d-34a8f16f9b01","method":"POST","path":"/ai/summaries","status":404,"ms":6,"userId":"c39b167d-7b4a-4696-b531-b7c57a0b2158"}
+{"ts":"2026-10-14T07:52:26.021Z","level":"info","correlationId":"5a0d8bde-e908-4c4c-9f23-32c7edaa4d87","method":"POST","path":"/requests/3f32660a-3882-4663-8bb1-561b6eea6d95/reserve","status":403,"ms":3,"userId":"9c78b573-92b1-47b5-889c-18d95a59837d"}
+{"ts":"2026-10-14T07:52:26.028Z","level":"info","correlationId":"fb61e79a-6326-45d4-be4e-27d2fb988991","method":"GET","path":"/audit-events","status":403,"ms":3,"userId":"9c78b573-92b1-47b5-889c-18d95a59837d"}
+✔ aislamiento entre organizaciones y permisos por rol (3115.4454ms)
+{"ts":"2026-10-14T07:52:26.620Z","level":"info","correlationId":"72438aab-67f1-41bd-b0cc-8cd47d9afce0","method":"POST","path":"/auth/login","status":200,"ms":451}
+{"ts":"2026-10-14T07:52:26.630Z","level":"info","correlationId":"d9ee8323-e139-40b9-8503-54bdbc4de3fd","method":"POST","path":"/requests","status":422,"ms":6,"userId":"14ee2ac3-ba17-462f-9362-f6c825fe8186"}
+{"ts":"2026-10-14T07:52:26.638Z","level":"info","correlationId":"b330e579-1202-4669-9f37-e3f1d6a544a0","method":"POST","path":"/requests","status":422,"ms":5,"userId":"14ee2ac3-ba17-462f-9362-f6c825fe8186"}
+{"ts":"2026-10-14T07:52:26.645Z","level":"info","correlationId":"eaa88bf4-06e2-41be-8931-d777a5d54d59","method":"POST","path":"/requests","status":422,"ms":4,"userId":"14ee2ac3-ba17-462f-9362-f6c825fe8186"}
+{"ts":"2026-10-14T07:52:26.654Z","level":"info","correlationId":"e0f8a4ef-7d0e-48e9-8601-ea37d2ab289e","method":"POST","path":"/requests","status":422,"ms":5,"userId":"14ee2ac3-ba17-462f-9362-f6c825fe8186"}
+{"ts":"2026-10-14T07:52:26.664Z","level":"info","correlationId":"47953616-c598-4166-8386-3821c4b4e8be","method":"POST","path":"/requests","status":422,"ms":7,"userId":"14ee2ac3-ba17-462f-9362-f6c825fe8186"}
+{"ts":"2026-10-14T07:52:26.672Z","level":"info","correlationId":"584719e5-fbff-441c-8183-0efa828ff9c5","method":"POST","path":"/requests","status":422,"ms":5,"userId":"14ee2ac3-ba17-462f-9362-f6c825fe8186"}
+{"ts":"2026-10-14T07:52:26.686Z","level":"info","correlationId":"f7cf6cff-1445-45e8-99af-072ab1efd338","method":"GET","path":"/requests","status":200,"ms":11,"userId":"14ee2ac3-ba17-462f-9362-f6c825fe8186"}
+{"ts":"2026-10-14T07:52:26.692Z","level":"info","correlationId":"2a6e077f-5296-47e2-abd0-d99e9e7eeee4","method":"GET","path":"/requests","status":422,"ms":3,"userId":"14ee2ac3-ba17-462f-9362-f6c825fe8186"}
+✔ validación de entrada: 422 sin crear nada (664.3882ms)
+{"ts":"2026-10-14T07:52:27.416Z","level":"info","correlationId":"81f2a3e6-2726-4f09-9808-ba589fac8ce7","method":"POST","path":"/auth/login","status":200,"ms":466}
+{"ts":"2026-10-14T07:52:27.999Z","level":"info","correlationId":"065fbd16-728d-4053-9d91-d310c2663bb8","method":"POST","path":"/auth/login","status":200,"ms":578}
+{"ts":"2026-10-14T07:52:28.021Z","level":"info","correlationId":"f9d3addf-7e4c-421e-b0ff-362dea9612ae","method":"GET","path":"/requests","status":200,"ms":19,"userId":"3c75bbcf-542e-44aa-b4fc-573c5aad0b1e"}
+{"ts":"2026-10-14T07:52:28.036Z","level":"info","correlationId":"bfe9c152-d878-4e9f-95d6-5313af679095","method":"GET","path":"/requests","status":200,"ms":9,"userId":"3c75bbcf-542e-44aa-b4fc-573c5aad0b1e"}
+{"ts":"2026-10-14T07:52:28.047Z","level":"info","correlationId":"cfe14ffb-5b56-48fb-8193-08e9000d3c21","method":"POST","path":"/ai/summaries","status":403,"ms":4,"userId":"3ee37067-6167-49a9-b1ce-7aed7e714ab8"}
+{"ts":"2026-10-14T07:52:28.069Z","level":"info","correlationId":"774e4f16-dc24-42d3-8b86-201d4ae2f4af","method":"POST","path":"/ai/summaries","status":200,"ms":17,"userId":"3c75bbcf-542e-44aa-b4fc-573c5aad0b1e"}
+{"ts":"2026-10-14T07:52:28.089Z","level":"info","correlationId":"3101643d-b514-47a6-bc92-926bc199ea9f","method":"POST","path":"/ai/summaries/5309d07d-fa4c-41d5-b016-54753fec2c9d/approve","status":200,"ms":17,"userId":"3c75bbcf-542e-44aa-b4fc-573c5aad0b1e"}
+{"ts":"2026-10-14T07:52:28.101Z","level":"info","correlationId":"99968f19-102e-4827-b777-de75c91adeda","method":"POST","path":"/ai/summaries/5309d07d-fa4c-41d5-b016-54753fec2c9d/approve","status":409,"ms":7,"userId":"3c75bbcf-542e-44aa-b4fc-573c5aad0b1e"}
+✔ asistente sin proveedor: resumen alternativo, aprobación única, solo coordinador (1416.6924ms)
+{"ts":"2026-10-14T07:52:30.818Z","level":"info","correlationId":"403d5272-b6d4-4bee-a346-52d637685554","method":"POST","path":"/auth/login","status":200,"ms":596}
+{"ts":"2026-10-14T07:52:31.295Z","level":"info","correlationId":"42bac347-3749-4b64-bf74-b3d0640a4ca6","method":"POST","path":"/auth/login","status":200,"ms":456}
+{"ts":"2026-10-14T07:52:31.355Z","level":"info","correlationId":"8f50084d-92c8-4091-837c-a798fc3e25e0","method":"POST","path":"/requests","status":201,"ms":52,"userId":"ecc60960-3332-4497-8f38-3a078563a997"}
+{"ts":"2026-10-14T07:52:31.475Z","level":"info","correlationId":"12d6baa7-f53e-4403-bf83-077788489e28","method":"POST","path":"/requests/93b4a0e3-6a43-4a21-af86-ca66b8ff982c/submit","status":200,"ms":107,"userId":"ecc60960-3332-4497-8f38-3a078563a997"}
+{"ts":"2026-10-14T07:52:31.529Z","level":"info","correlationId":"81afe744-406b-496b-a9f1-397a0c953c55","method":"POST","path":"/requests/93b4a0e3-6a43-4a21-af86-ca66b8ff982c/reserve","status":200,"ms":39,"userId":"62799ad2-b9fe-44ae-9b7a-586c590cf8b8"}
+{"ts":"2026-10-14T07:52:31.549Z","level":"info","correlationId":"48ca4d80-f0d9-4aac-b016-a73f655e3126","method":"POST","path":"/requests/93b4a0e3-6a43-4a21-af86-ca66b8ff982c/reserve","status":200,"ms":14,"userId":"62799ad2-b9fe-44ae-9b7a-586c590cf8b8"}
+✔ misma clave y mismo contenido dos veces: mismo resultado y un solo efecto (1725.885ms)
+{"ts":"2026-10-14T07:52:32.169Z","level":"info","correlationId":"a0519eae-879c-413f-a539-aeeb7ad5a3fb","method":"POST","path":"/auth/login","status":200,"ms":464}
+{"ts":"2026-10-14T07:52:32.614Z","level":"info","correlationId":"8c437820-5249-418b-9671-c08ae6708407","method":"POST","path":"/auth/login","status":200,"ms":441}
+{"ts":"2026-10-14T07:52:32.644Z","level":"info","correlationId":"1c395632-4fd1-475a-80e7-b479aaf9f38f","method":"POST","path":"/requests","status":201,"ms":25,"userId":"a4205207-2b68-42b8-89b6-021e9c38e69a"}
+{"ts":"2026-10-14T07:52:32.669Z","level":"info","correlationId":"2b339bd0-4034-4066-89cc-37662615d6de","method":"POST","path":"/requests/b029ef64-e958-4278-a507-0ada1d7fe82a/submit","status":200,"ms":20,"userId":"a4205207-2b68-42b8-89b6-021e9c38e69a"}
+{"ts":"2026-10-14T07:52:32.690Z","level":"info","correlationId":"efbb8ac8-b0ba-4b5c-9684-340d592189a6","method":"POST","path":"/requests","status":201,"ms":16,"userId":"a4205207-2b68-42b8-89b6-021e9c38e69a"}
+{"ts":"2026-10-14T07:52:32.714Z","level":"info","correlationId":"a9304ad1-a98b-4803-8adb-3c3274c42f0e","method":"POST","path":"/requests/adfe7cab-b0c2-4ca4-a754-1c0d8cfde54b/submit","status":200,"ms":21,"userId":"a4205207-2b68-42b8-89b6-021e9c38e69a"}
+{"ts":"2026-10-14T07:52:32.748Z","level":"info","correlationId":"64ff05cd-bc1a-4ee3-be28-0931e2178c74","method":"POST","path":"/requests/b029ef64-e958-4278-a507-0ada1d7fe82a/reserve","status":200,"ms":31,"userId":"336436b0-93c5-400e-97b4-5b8ec7efd938"}
+{"ts":"2026-10-14T07:52:32.768Z","level":"info","correlationId":"7888423f-17b3-4102-92b1-fb4790f5423f","method":"POST","path":"/requests/adfe7cab-b0c2-4ca4-a754-1c0d8cfde54b/reserve","status":409,"ms":11,"userId":"336436b0-93c5-400e-97b4-5b8ec7efd938"}
+✔ misma clave con contenido distinto: 409 y la segunda solicitud no cambia (1212.003ms)
+{"ts":"2026-10-14T07:52:33.370Z","level":"info","correlationId":"9ec0a24a-2b73-44a0-9364-6013fb7bc2f8","method":"POST","path":"/auth/login","status":200,"ms":452}
+{"ts":"2026-10-14T07:52:33.821Z","level":"info","correlationId":"a68a6680-e338-4567-874e-3f64af0cd33c","method":"POST","path":"/auth/login","status":200,"ms":447}
+{"ts":"2026-10-14T07:52:34.286Z","level":"info","correlationId":"b9654f7e-59c8-4d43-9a6f-7218e9b7e375","method":"POST","path":"/auth/login","status":200,"ms":462}
+{"ts":"2026-10-14T07:52:34.818Z","level":"info","correlationId":"c13f5cda-6825-4299-a7e2-8a11d9961f5a","method":"POST","path":"/auth/login","status":200,"ms":529}
+{"ts":"2026-10-14T07:52:34.839Z","level":"info","correlationId":"f56b276d-8899-4152-82fa-02e7f96e7a2d","method":"POST","path":"/requests","status":201,"ms":18,"userId":"fd60acac-3a47-4c23-8ccb-920c5475ae5e"}
+{"ts":"2026-10-14T07:52:34.860Z","level":"info","correlationId":"98536663-80b5-4d6f-9252-02219ee6b664","method":"POST","path":"/requests/1937a835-80dc-45a7-87cb-57af5e080af2/submit","status":200,"ms":18,"userId":"fd60acac-3a47-4c23-8ccb-920c5475ae5e"}
+{"ts":"2026-10-14T07:52:34.879Z","level":"info","correlationId":"b67c531d-9f74-4674-afb3-1e1537c2e5d2","method":"POST","path":"/requests","status":201,"ms":15,"userId":"aa30bf24-0886-4b68-b7c2-904eee5b5bb1"}
+{"ts":"2026-10-14T07:52:34.902Z","level":"info","correlationId":"167f5b0b-9385-4677-b492-98316781d92d","method":"POST","path":"/requests/86608104-c3fc-4bef-881b-d58bc893d03a/submit","status":200,"ms":21,"userId":"aa30bf24-0886-4b68-b7c2-904eee5b5bb1"}
+{"ts":"2026-10-14T07:52:34.932Z","level":"info","correlationId":"5b3512fd-50eb-49ee-8cff-685ee26f8f38","method":"POST","path":"/requests/1937a835-80dc-45a7-87cb-57af5e080af2/reserve","status":200,"ms":28,"userId":"b9668b4e-218b-4944-b689-30324dfd07e4"}
+{"ts":"2026-10-14T07:52:34.962Z","level":"info","correlationId":"1f86ff6b-eece-4524-ac0b-339c4ebf198c","method":"POST","path":"/requests/86608104-c3fc-4bef-881b-d58bc893d03a/reserve","status":200,"ms":23,"userId":"196be322-9315-4900-87af-3c518847e16b"}
+{"ts":"2026-10-14T07:52:34.984Z","level":"info","correlationId":"879aaf8e-52f2-481d-8a52-4f97a51b4295","method":"POST","path":"/requests","status":201,"ms":14,"userId":"fd60acac-3a47-4c23-8ccb-920c5475ae5e"}
+{"ts":"2026-10-14T07:52:35.003Z","level":"info","correlationId":"77973917-3747-4983-88b7-1a0bef0a34d5","method":"POST","path":"/requests/b366e18e-4af7-4dd4-b20d-c9661ae29e1c/submit","status":200,"ms":17,"userId":"fd60acac-3a47-4c23-8ccb-920c5475ae5e"}
+{"ts":"2026-10-14T07:52:35.015Z","level":"info","correlationId":"704f76c0-529f-483d-93aa-b851aebbb311","method":"POST","path":"/requests/b366e18e-4af7-4dd4-b20d-c9661ae29e1c/reserve","status":404,"ms":7,"userId":"196be322-9315-4900-87af-3c518847e16b"}
+✔ misma clave de otro usuario: no recibe la respuesta ajena (2245.4976ms)
+{"ts":"2026-10-14T07:52:35.588Z","level":"info","correlationId":"b4888808-c2f9-4e3f-be8a-2bbe7f57ac89","method":"POST","path":"/auth/login","status":200,"ms":423}
+{"ts":"2026-10-14T07:52:36.056Z","level":"info","correlationId":"4da0e056-768c-4830-a555-3bb2248b5d3a","method":"POST","path":"/auth/login","status":200,"ms":466}
+{"ts":"2026-10-14T07:52:36.078Z","level":"info","correlationId":"c57df561-0e19-4aa9-b6fc-ab4aee018797","method":"POST","path":"/requests","status":201,"ms":20,"userId":"23b377a3-dd7f-4859-9e9a-68a5553f2b6b"}
+{"ts":"2026-10-14T07:52:36.105Z","level":"info","correlationId":"2e489d56-7868-49fe-a67c-8664d687ec75","method":"POST","path":"/requests/e7caa190-7f8d-4576-9b30-1320f1cd7d88/submit","status":200,"ms":19,"userId":"23b377a3-dd7f-4859-9e9a-68a5553f2b6b"}
+{"ts":"2026-10-14T07:52:36.130Z","level":"info","correlationId":"ba92d48f-044d-4046-8ada-261cb6949125","method":"POST","path":"/requests/e7caa190-7f8d-4576-9b30-1320f1cd7d88/reserve","status":200,"ms":22,"userId":"50d50245-f19c-4490-b296-bb216f146043"}
+{"ts":"2026-10-14T07:52:36.153Z","level":"info","correlationId":"2a8e6262-b0cf-45f0-a2c6-7d3344a5ccb0","method":"POST","path":"/requests/e7caa190-7f8d-4576-9b30-1320f1cd7d88/reserve","status":409,"ms":13,"userId":"50d50245-f19c-4490-b296-bb216f146043"}
+✔ segunda reserva con otra clave: 409 y el inventario no cambia (1135.5344ms)
+{"ts":"2026-10-14T07:52:36.723Z","level":"info","correlationId":"29a1609e-373c-4fb3-ac54-93d9d7959f36","method":"POST","path":"/auth/login","status":200,"ms":421}
+{"ts":"2026-10-14T07:52:37.195Z","level":"info","correlationId":"bef8a9de-1627-4c25-8643-125283f11094","method":"POST","path":"/auth/login","status":200,"ms":469}
+{"ts":"2026-10-14T07:52:37.217Z","level":"info","correlationId":"b19f9138-d372-4d93-b11a-eb65c71052e5","method":"POST","path":"/requests","status":201,"ms":19,"userId":"8a8b3f30-24a4-4b25-b66f-8ea4e1788c21"}
+{"ts":"2026-10-14T07:52:37.236Z","level":"info","correlationId":"c1954059-a737-4852-b5d7-a90eb0b89e1c","method":"POST","path":"/requests/3034fad9-8e02-475a-89fa-639023f2428a/submit","status":200,"ms":17,"userId":"8a8b3f30-24a4-4b25-b66f-8ea4e1788c21"}
+{"ts":"2026-10-14T07:52:37.252Z","level":"info","correlationId":"73984c4a-d8ce-4071-a982-ff974ba95f68","method":"POST","path":"/requests/3034fad9-8e02-475a-89fa-639023f2428a/reserve","status":400,"ms":6,"userId":"c033f543-d510-4369-a7d2-0e1f44680f67"}
+✔ reserva sin Idempotency-Key: 400 y sin efectos (1101.2365ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 34575.429
+
+MUTACION: ex.request_hash !== hash reemplazado por false en transitions.js:71
+Resultado: 24 aprobadas, 2 fallidas (misma clave con contenido distinto; flujo completo, idempotencia y auditoria)
+Restaurado con git checkout apps/api/src
