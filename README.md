@@ -1,12 +1,44 @@
-# Starter del examen NexoEntrega 360
+# NexoEntrega 360
 
-Esta estructura prepara archivos y revisiones. No trae lógica de negocio, API, interfaz, base implementada ni un pipeline que se pueda anunciar como aprobado.
+Aplicación web, API HTTP y base PostgreSQL para registrar solicitudes de kits comunitarios, reservar existencias, despachar, entregar y conservar auditoría. Un asistente de IA resume solicitudes pendientes, pero nunca decide ni mueve inventario. Proyecto del examen de Spec Driven Development con IA. Todos los datos son ficticios.
 
-1. Copie el contenido en un repositorio vacío o adapte el suyo. Copie los anexos pertinentes a docs, contracts y evidence.
-2. Cree cinco carpetas bajo specs y copie spec-source-template.md como spec.md en cada una. Complete el único bloque JSON canónico y el contexto/revisión. Mantenga los IDs al evolucionar.
-3. Ejecute `python3 scripts/export_specs.py` desde la raíz. Genere y versione spec.json junto a cada fuente. Ejecute `python3 scripts/export_specs.py --check` en CI después del checkout; no exporte antes del check, porque ocultaría una diferencia.
-4. Revise SPEC, arquitectura, contrato y tareas antes de implementar cada funcionalidad. El comprobador valida formato básico y coincidencia; una revisión humana debe verificar reglas, contenido y cobertura.
-5. Elija su stack y añada sus dependencias fijadas, aplicación, migraciones, datos, pruebas reales y pipeline. Conserve fallos visibles. Estas carpetas vacías no cuentan como evidencia.
-6. Documente comandos efectivos de arranque, test, carga y recuperación en el runbook. CI debe comprobar también contratos, formato/tipos, pruebas contra base real y build. Un check de SPECS por sí solo no verifica el producto.
+## Estado
+Flujo completo implementado (RF01 a RF12) con pruebas contra base real. Quedan gaps declarados: ver `docs/risks.md` y la sección 9 de `docs/runbook.md`.
 
-Con Python disponible, no se necesitan paquetes adicionales para el exportador. Make es opcional. Puede reemplazar el mecanismo de exportación por otro reproducible, manteniendo una sola fuente y comprobación de coincidencia.
+## Requisitos
+Docker con Compose, Node >= 20 (CI usa 22), cliente `psql` y Python 3. Versiones y pasos completos en `docs/runbook.md`.
+
+## Arranque
+```bash
+cp .env.example .env
+docker compose -f infra/docker-compose.yml --env-file .env up -d db
+export DATABASE_URL=postgres://nexo_owner:cambie-esta-clave-local@127.0.0.1:5432/nexoentrega
+scripts/migrate.sh
+scripts/seed.sh
+set -a; . ./.env; set +a
+cd apps/api && npm ci && npm start
+```
+La API sirve la interfaz en http://127.0.0.1:3000/. Limitación: no existe aún un comando único de arranque.
+
+## Pruebas
+```bash
+export OWNER_DATABASE_URL=postgres://nexo_owner:cambie-esta-clave-local@127.0.0.1:5432/nexoentrega
+export DATABASE_URL=postgres://nexo_app:cambie-esta-clave-app-local@127.0.0.1:5432/nexoentrega
+cd apps/api && npm test
+python3 scripts/export_specs.py --check
+python3 scripts/validate_contracts.py
+```
+
+## Cuentas de demostración (ficticias)
+`org-{a|b}-{solicitante|coordinador|bodega|auditor}@example.test`, contraseña de demostración `Nexo-Demo-2026`. Se regeneran con `scripts/seed.sh`.
+
+## Estructura
+- `specs/`: cinco SPECS (fuente Markdown y spec.json generado)
+- `docs/`: arquitectura, ADR, clarificaciones, runbook, riesgos, gate-reviews
+- `contracts/`: OpenAPI y esquema de salida de IA
+- `apps/api`, `apps/web`: API Node y interfaz estática
+- `migrations/`, `seeds/`, `infra/`, `scripts/`
+- `evidence/`: trazabilidad, pruebas y bitácora de IA
+
+## Gaps conocidos
+Sin comando único de arranque, sin carga k6 ni Playwright, sin lint/build en CI, revisión móvil y de teclado pendiente, salida real de LLM pendiente.
