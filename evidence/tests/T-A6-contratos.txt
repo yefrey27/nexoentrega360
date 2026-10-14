@@ -1,0 +1,17 @@
+T-A6 Validación de contratos
+Fecha UTC: 2026-10-14T01:04:05Z
+Comando: python3 scripts/validate_contracts.py
+-----
+PASS  OpenAPI 3.1.1 válido, 16 rutas
+PASS  esquema de IA: salida válida -> aceptada
+PASS  esquema de IA: propiedad adicional en la raíz -> rechazada
+PASS  esquema de IA: propiedad adicional en una recomendación -> rechazada
+PASS  esquema de IA: evidenceFields con 4 claves -> rechazada
+PASS  esquema de IA: evidenceFields vacío -> rechazada
+PASS  esquema de IA: clave de evidencia no permitida -> rechazada
+PASS  esquema de IA: summary de 600 caracteres -> aceptada
+PASS  esquema de IA: summary de 601 caracteres -> rechazada
+PASS  esquema de IA: 6 recomendaciones -> rechazada
+PASS  esquema de IA: reason de 241 caracteres -> rechazada
+Nota: el esquema no detecta IDs ajenos ni duplicados; eso lo valida el código del adaptador (ADR-0004).
+exit=0

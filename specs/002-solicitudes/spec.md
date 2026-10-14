@@ -1,0 +1,93 @@
+# SPEC-002 Creación y envío de solicitudes
+
+Autor: Yefrey (con asistencia de IA) · Revisión: PENDIENTE (persona distinta) · Fecha UTC: PENDIENTE · Commit: PENDIENTE
+
+Alcance: crear, editar y enviar solicitudes con líneas de SKU. Exclusiones: reserva, despacho, entrega y cancelación (SPEC-003). Dependencias: SPEC-001, Q-01, Q-02, Q-03, Q-04, Q-08, Q-11.
+
+<!-- spec-data:start -->
+```json
+{
+  "id": "SPEC-002",
+  "version": "0.1.0",
+  "name": "Creación y envío de solicitudes",
+  "story": {
+    "id": "HU-02",
+    "as": "solicitante de una organización comunitaria",
+    "want": "crear un borrador con zona, prioridad, fecha requerida y de 1 a 10 líneas de kits, editarlo y enviarlo",
+    "soThat": "el coordinador reciba solicitudes válidas y completas sin hojas de cálculo ni mensajes sueltos"
+  },
+  "requirements": ["RF03", "RF04", "RNF05", "RNF01"],
+  "description": "Una solicitud nace como BORRADOR con código generado por el sistema. Solo el borrador es editable. Al enviar se revalidan todas las reglas y pasa a ENVIADA sin tocar el inventario.",
+  "inputs": [
+    {"field": "zone", "type": "enum", "validation": ["NORTE, SUR, CENTRO o RIBERA (Q-01)", "valor desconocido produce 422 (Q-02)"]},
+    {"field": "priority", "type": "enum", "validation": ["NORMAL o ALTA"]},
+    {"field": "requiredDate", "type": "fecha ISO YYYY-MM-DD", "validation": ["obligatoria", "no anterior a la fecha actual en America/Bogota al enviar (Q-03)"]},
+    {"field": "notes", "type": "string opcional", "validation": ["máximo 500 caracteres (Q-04)", "texto plano"]},
+    {"field": "lines", "type": "arreglo de objetos", "validation": ["de 1 a 10 elementos al enviar", "sin SKU repetidos"]},
+    {"field": "lines.sku", "type": "string", "validation": ["SKU existente y activo"]},
+    {"field": "lines.quantity", "type": "entero", "validation": ["entre 1 y 500", "sin decimales ni negativos"]}
+  ],
+  "process": [
+    "Autenticar y autorizar: solo SOLICITANTE crea, edita y envía, y solo sus propios borradores.",
+    "Crear: validar campos, generar código SOL-ORG-secuencia (Q-08), guardar BORRADOR con las líneas.",
+    "Editar: permitido solo en BORRADOR del dueño; se reemplaza el conjunto de líneas completo y se revalida.",
+    "Enviar: revalidar todo en la misma transacción, comprobar de 1 a 10 líneas y fecha vigente, pasar a ENVIADA y registrar evento de auditoría.",
+    "Ningún paso de este flujo modifica existencia física ni cantidad reservada."
+  ],
+  "outputs": [
+    {"condition": "creación válida", "result": "201 con id, código generado y estado BORRADOR; sin inventario modificado"},
+    {"condition": "datos inválidos", "result": "422 con lista de campos inválidos y mensaje por campo; no se crea ni cambia nada"},
+    {"condition": "edición de solicitud que no está en BORRADOR", "result": "409 y datos intactos"},
+    {"condition": "envío válido de un borrador", "result": "200 con estado ENVIADA y un evento de auditoría"},
+    {"condition": "envío de solicitud que no es BORRADOR", "result": "409 sin efectos"}
+  ],
+  "businessRules": [
+    "El código es generado por el sistema y no se acepta del cliente.",
+    "Prioridad solo NORMAL o ALTA; por defecto NORMAL.",
+    "Cantidad entera de 1 a 500; de 1 a 10 líneas con SKU distintos.",
+    "La fecha requerida no puede ser anterior al momento del envío, evaluada en la fecha de Bogotá.",
+    "Solo el borrador es editable.",
+    "El solicitante ve y modifica solo lo suyo."
+  ],
+  "edgeCases": [
+    "Cantidad 0, -1, 501 y 1.5.",
+    "Exactamente 1 y exactamente 10 líneas son válidas; 11 no.",
+    "Borrador sin líneas se puede guardar pero no enviar.",
+    "Fecha requerida igual a hoy en Bogotá: válida; ayer: inválida.",
+    "Envío a las 23:30 hora de Bogotá cuando en UTC ya es el día siguiente: se evalúa con la fecha de Bogotá.",
+    "Observaciones de exactamente 500 caracteres válidas, de 501 no.",
+    "Doble clic en Enviar: la segunda llamada responde 409 y no duplica evento de auditoría.",
+    "SKU inactivo o inexistente: 422 en el campo de la línea."
+  ],
+  "acceptanceCriteria": [
+    {"id": "AC-RF03-01", "given": "un solicitante autenticado y un SKU activo", "when": "envía una línea con cantidad 0", "then": "el sistema responde 422, describe el campo inválido y no crea una solicitud enviada ni modifica inventario"},
+    {"id": "AC-RF03-02", "given": "un solicitante autenticado y un SKU activo", "when": "envía líneas con cantidad -1, 501 y 1.5 en peticiones separadas", "then": "cada una responde 422 señalando lines.quantity y no persiste cambios"},
+    {"id": "AC-RF03-03", "given": "un solicitante autenticado", "when": "crea un borrador con dos líneas del mismo SKU", "then": "responde 422 indicando el SKU repetido y no crea la solicitud"},
+    {"id": "AC-RF03-04", "given": "un solicitante autenticado", "when": "crea un borrador con un SKU inexistente y otro con un SKU inactivo", "then": "ambas peticiones responden 422 en lines.sku"},
+    {"id": "AC-RF03-05", "given": "un solicitante autenticado", "when": "crea un borrador válido con zona CENTRO, prioridad ALTA, fecha de hoy en Bogotá y 1 línea de cantidad 1", "then": "responde 201 con estado BORRADOR y código generado por el sistema, y el inventario no cambia"},
+    {"id": "AC-RF03-06", "given": "un cuerpo que incluye un campo code con valor SOL-X-000001", "when": "se crea el borrador", "then": "el código devuelto lo genera el servidor y es distinto del enviado"},
+    {"id": "AC-RF03-07", "given": "un borrador con 11 líneas distintas", "when": "se intenta guardar", "then": "responde 422 indicando el máximo de 10 líneas; con 10 líneas responde 201"},
+    {"id": "AC-RF03-08", "given": "un borrador sin líneas", "when": "el solicitante intenta enviarlo", "then": "responde 422 y el estado sigue BORRADOR"},
+    {"id": "AC-RF03-09", "given": "un borrador con fecha requerida de ayer en Bogotá", "when": "el solicitante lo envía", "then": "responde 422 en requiredDate y el estado sigue BORRADOR; con fecha de hoy responde 200"},
+    {"id": "AC-RF03-10", "given": "un solicitante autenticado", "when": "crea un borrador con zona fuera de la lista o prioridad URGENTE", "then": "responde 422 en zone o priority respectivamente y no crea la solicitud"},
+    {"id": "AC-RF03-11", "given": "un solicitante autenticado", "when": "crea borradores con observaciones de 500 y de 501 caracteres", "then": "el de 500 responde 201 y el de 501 responde 422 en notes"},
+    {"id": "AC-RF04-01", "given": "un borrador propio válido", "when": "el solicitante cambia zona y cantidades con PUT", "then": "responde 200 con los nuevos valores y el estado sigue BORRADOR"},
+    {"id": "AC-RF04-02", "given": "una solicitud ENVIADA", "when": "su dueño intenta editarla", "then": "responde 409 y los datos permanecen idénticos"},
+    {"id": "AC-RF04-03", "given": "un borrador válido de un solicitante", "when": "lo envía", "then": "responde 200 con estado ENVIADA, se crea exactamente un evento de auditoría de envío con usuario, organización, UTC y correlationId, y el inventario no cambia"},
+    {"id": "AC-RF04-04", "given": "una solicitud ya ENVIADA", "when": "se vuelve a enviar", "then": "responde 409 y no se agrega un segundo evento de auditoría"},
+    {"id": "AC-RF04-05", "given": "el borrador de otro solicitante de la misma organización", "when": "un solicitante intenta editarlo o enviarlo", "then": "responde 403 y no cambia nada"},
+    {"id": "AC-RNF05-01", "given": "el formulario de solicitud abierto a 390 y a 1366 píxeles de ancho", "when": "se completa y envía solo con teclado", "then": "no hay desplazamiento horizontal, todos los campos tienen etiqueta y cada mensaje de error está asociado a su campo"}
+  ]
+}
+```
+<!-- spec-data:end -->
+
+## Decisiones y aclaraciones
+- Q-01 a Q-04, Q-08 y Q-11 (ver `docs/clarifications.md`). Las respuestas del cliente, cuando lleguen, se anotan aquí y se sube la versión de la SPEC.
+
+## Riesgos y plan de prueba
+- Riesgo: validación solo en cliente. Control: toda regla se valida en servidor y en la base (CHECK de cantidad, restricción única de SKU por solicitud).
+- Pruebas: dominio (validadores con tabla de casos límite), API con base real, E2E (crear y enviar), revisión manual 390/1366 y teclado.
+
+## Historial de cambios
+- 0.1.0 Borrador inicial para G1.

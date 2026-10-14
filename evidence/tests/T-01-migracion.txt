@@ -1,0 +1,58 @@
+T-01 Migración y restricciones
+Fecha UTC: 2026-10-14T01:12:11Z
+Commit: 36ec6e4941b6ddc3c56dcb21ddec330591a62f48
+Servidor: PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0, 64-bit
+Comando: scripts/test_migration.sh
+Base temporal: nexo_t01_362
+-----
+NOTICE:  database "nexo_t01_362" does not exist, skipping
+PASS  migración 0001_init.sql aplicada
+PASS  schema_migrations registra 0001_init = 1
+PASS  datos de prueba cargados (A-001 y A-002 ENVIADA, 7 unidades cada una, física 10)
+PASS  inventario: reservada mayor que física (SQLSTATE 23514)
+PASS  inventario: física negativa (SQLSTATE 23514)
+PASS  inventario: reservada negativa (SQLSTATE 23514)
+PASS  inventario sin cambios tras los rechazos = 10|0
+PASS  línea con cantidad 0 (SQLSTATE 23514)
+PASS  línea con cantidad 501 (SQLSTATE 23514)
+PASS  línea con cantidad negativa (SQLSTATE 23514)
+PASS  SKU repetido en la misma solicitud (SQLSTATE 23505)
+PASS  SKU inexistente (SQLSTATE 23503)
+PASS  observaciones de 501 caracteres (SQLSTATE 23514)
+PASS  observaciones de 500 caracteres
+PASS  solicitante de otra organización (FK compuesta) (SQLSTATE 23503)
+PASS  código de solicitud duplicado (SQLSTATE 23505)
+PASS  enviar borrador sin líneas (SQLSTATE 23514)
+PASS  enviar borrador con 11 líneas (SQLSTATE 23514)
+PASS  enviar borrador con 10 líneas
+PASS  BORRADOR a RESERVADA (SQLSTATE 23514)
+PASS  ENVIADA a DESPACHADA (SQLSTATE 23514)
+PASS  ENVIADA a ENTREGADA (SQLSTATE 23514)
+PASS  modificar líneas de una solicitud ENVIADA (SQLSTATE 23514)
+PASS  borrar líneas de una solicitud ENVIADA (SQLSTATE 23514)
+PASS  cadena completa BORRADOR a ENTREGADA = ENTREGADA
+PASS  ENTREGADA a CANCELADA (SQLSTATE 23514)
+PASS  ENTREGADA a ENVIADA (SQLSTATE 23514)
+PASS  nexo_app inserta evento de auditoría
+PASS  nexo_app lee auditoría
+PASS  nexo_app: UPDATE sobre audit_events denegado (SQLSTATE 42501)
+PASS  nexo_app: DELETE sobre audit_events denegado (SQLSTATE 42501)
+PASS  nexo_app: TRUNCATE sobre audit_events denegado (SQLSTATE 42501)
+PASS  propietario: UPDATE bloqueado por disparador (SQLSTATE 42501)
+PASS  propietario: DELETE bloqueado por disparador (SQLSTATE 42501)
+PASS  propietario: TRUNCATE bloqueado por disparador (SQLSTATE 42501)
+PASS  auditoría conserva 1 evento = 1
+PASS  nexo_app: no modifica usuarios (SQLSTATE 42501)
+PASS  nexo_app: no crea tablas (SQLSTATE 42501)
+PASS  inserta clave de idempotencia
+PASS  misma clave, usuario, organización y operación (SQLSTATE 23505)
+PASS  misma clave en otra operación es independiente
+PASS  retención menor a 24 horas (SQLSTATE 23514)
+PASS  clave de menos de 8 caracteres (SQLSTATE 23514)
+PASS  intento de IA con 21 identificadores (SQLSTATE 23514)
+PASS  intento de IA con resumen de 601 caracteres (SQLSTATE 23514)
+PASS  proveedor de IA desconocido (SQLSTATE 23514)
+PASS  concurrencia A-001 contra A-002: 1 éxito y 1 rechazo
+PASS  concurrencia: física|reservada|disponible persistidas = 10|7|3
+-----
+Resultado: 48 aprobadas, 0 fallidas

@@ -1,0 +1,91 @@
+# SPEC-001 Identidad y permisos
+
+Autor: Yefrey (con asistencia de IA) · Revisión: PENDIENTE (persona distinta) · Fecha UTC: PENDIENTE · Commit: PENDIENTE
+
+Alcance: inicio y cierre de sesión, identidad derivada del servidor, matriz de permisos y aislamiento por organización. Exclusiones: recuperación de contraseña, alta masiva de usuarios, proveedores de identidad externos. Dependencias: ADR-0003, Q-06, Q-12.
+
+<!-- spec-data:start -->
+```json
+{
+  "id": "SPEC-001",
+  "version": "0.1.0",
+  "name": "Identidad y permisos",
+  "story": {
+    "id": "HU-01",
+    "as": "usuario de una organización comunitaria (solicitante, coordinador, bodega o auditor)",
+    "want": "iniciar sesión y que el servidor me permita solo las operaciones de mi rol sobre los recursos de mi organización",
+    "soThat": "nadie vea ni modifique datos ajenos y cada operación pueda atribuirse a una persona"
+  },
+  "requirements": ["RF01", "RF02", "RNF01", "RNF06"],
+  "description": "Autenticación con cuentas sembradas mediante sesiones de servidor, autorización por rol y organización en cada operación, y respuestas 401, 403 y 404 con semántica fija. La organización y el rol salen de la sesión, nunca de datos enviados por el navegador.",
+  "inputs": [
+    {"field": "email", "type": "string", "validation": ["obligatorio", "formato de correo", "máximo 254 caracteres"]},
+    {"field": "password", "type": "string", "validation": ["obligatorio", "entre 1 y 128 caracteres", "nunca se registra en logs"]},
+    {"field": "cookie de sesión", "type": "string opaca", "validation": ["HttpOnly", "SameSite=Lax", "el servidor guarda solo el hash del identificador"]}
+  ],
+  "process": [
+    "POST /auth/login busca el usuario por correo y verifica la contraseña contra el hash con tiempo comparable para usuario inexistente y contraseña errónea.",
+    "Si es válida, crea una sesión con expiración, guarda el hash del identificador y responde 200 con id, nombre, rol y organización; la cookie se envía en la cabecera.",
+    "Cada petición protegida resuelve la sesión; sin sesión válida responde 401.",
+    "El middleware de permisos compara rol y operación con la matriz; si el rol no puede, responde 403 solo cuando el recurso pertenece a la organización del usuario.",
+    "Todo recurso se busca filtrando por la organización de la sesión; si no existe o es de otra organización responde 404 idéntico.",
+    "POST /auth/logout elimina la sesión en servidor y expira la cookie."
+  ],
+  "outputs": [
+    {"condition": "credenciales válidas", "result": "200 con usuario, rol y organización, sin hash ni contraseña; cookie de sesión"},
+    {"condition": "credenciales inválidas o usuario inexistente", "result": "401 con mensaje genérico idéntico; sin sesión; log técnico sin la contraseña"},
+    {"condition": "sin sesión o sesión expirada o cerrada", "result": "401 con cuerpo de error estándar y correlationId"},
+    {"condition": "rol sin permiso sobre recurso de su organización", "result": "403 sin efectos"},
+    {"condition": "recurso inexistente o de otra organización", "result": "404 con cuerpo idéntico, sin efectos"}
+  ],
+  "businessRules": [
+    "Matriz: Solicitante crea y edita borradores propios, envía y cancela propias (ENVIADA o RESERVADA) y consulta las propias.",
+    "Matriz: Coordinador consulta su organización, reserva ENVIADA, registra ENTREGADA sobre DESPACHADA y usa y aprueba resúmenes de IA.",
+    "Matriz: Bodega consulta inventario y solicitudes de su organización y despacha RESERVADA.",
+    "Matriz: Auditor consulta solicitudes, inventario y auditoría de su organización y no modifica datos ni invoca el asistente.",
+    "No existe selector de rol; la organización y el rol vienen de la sesión.",
+    "Las contraseñas se guardan con hash adaptativo (argon2id) y no hay claves privadas en el repositorio.",
+    "Un solicitante que consulta una solicitud ajena de su misma organización recibe 403 (supuesto Q-12).",
+    "Las mismas reglas aplican a listados, auditoría, agregados, errores y logs."
+  ],
+  "edgeCases": [
+    "Cabecera X-Org-Id o campo orgId o role en el cuerpo con otra organización: se ignora y se usa la de la sesión.",
+    "Sesión usada después del logout desde otra pestaña: 401.",
+    "Identificador en la ruta con formato inválido o inexistente: 404 idéntico al de otra organización, sin revelar existencia.",
+    "Dos cuentas con el mismo rol en organizaciones distintas: cada una ve solo lo suyo.",
+    "Contraseña de 129 caracteres: 422 sin consultar hash."
+  ],
+  "acceptanceCriteria": [
+    {"id": "AC-RF01-01", "given": "una cuenta sembrada del coordinador de ORG-A con su contraseña correcta", "when": "envía POST /auth/login", "then": "recibe 200 con rol COORDINADOR y organización ORG-A, una cookie HttpOnly y ningún campo de contraseña ni hash en el cuerpo"},
+    {"id": "AC-RF01-02", "given": "un correo existente con contraseña errónea y un correo inexistente", "when": "se envían dos POST /auth/login", "then": "ambos responden 401 con el mismo mensaje y sin crear sesión"},
+    {"id": "AC-RF01-03", "given": "una sesión activa", "when": "el usuario llama POST /auth/logout y luego GET /requests con la misma cookie", "then": "el logout responde 204 y la lectura responde 401"},
+    {"id": "AC-RF01-04", "given": "una sesión cuya expiración ya pasó", "when": "se llama a cualquier endpoint protegido", "then": "responde 401 y la sesión no se reactiva"},
+    {"id": "AC-RF01-05", "given": "la base sembrada y el repositorio", "when": "se inspeccionan las contraseñas y se ejecuta la detección de secretos", "then": "ninguna contraseña está en texto plano en la base, solo hashes argon2id, y la detección de secretos no reporta claves privadas"},
+    {"id": "AC-RF01-06", "given": "un solicitante de ORG-A autenticado", "when": "envía una petición con cabecera X-Org-Id de ORG-B y un campo role con valor COORDINADOR en el cuerpo", "then": "el servidor usa ORG-A y rol SOLICITANTE de la sesión y no concede ninguna operación adicional"},
+    {"id": "AC-RF02-01", "given": "una solicitud de ORG-B y un coordinador de ORG-A autenticado", "when": "consulta GET /requests/{id} de esa solicitud y luego de un UUID inexistente", "then": "ambas respuestas son 404 con cuerpo y cabeceras equivalentes"},
+    {"id": "AC-RF02-02", "given": "una solicitud ENVIADA de ORG-B y un coordinador de ORG-A", "when": "intenta reservarla con Idempotency-Key", "then": "responde 404, el inventario de ORG-B no cambia, el estado sigue ENVIADA y no se crea evento de auditoría"},
+    {"id": "AC-RF02-03", "given": "una solicitud RESERVADA de ORG-B y un usuario de bodega de ORG-A", "when": "intenta despacharla", "then": "responde 404 y la existencia física y la reservada de ORG-B no cambian"},
+    {"id": "AC-RF02-04", "given": "una solicitud ENVIADA de ORG-B y un coordinador de ORG-A", "when": "pide un resumen de IA que incluye ese identificador", "then": "responde 404, el adaptador de IA no recibe ningún dato de ORG-B y no se registra intento de resumen exitoso"},
+    {"id": "AC-RF02-05", "given": "solicitudes y eventos de auditoría en ORG-A y ORG-B", "when": "un auditor de ORG-A consulta listados, auditoría y tablero", "then": "todas las filas y los totales corresponden solo a ORG-A"},
+    {"id": "AC-RF02-06", "given": "dos solicitantes distintos de ORG-A y una solicitud del primero", "when": "el segundo consulta esa solicitud", "then": "responde 403 y no revela datos de la solicitud"},
+    {"id": "AC-RNF01-01", "given": "usuarios de ORG-A con datos de ORG-B existentes", "when": "se ejecutan dos lecturas cruzadas (detalle de solicitud y listado de auditoría por identificador) y dos escrituras cruzadas (reserva y despacho)", "then": "las cuatro son denegadas con 404, sin cambios en base de datos, y cada resultado queda en evidence/tests"},
+    {"id": "AC-RNF01-02", "given": "cualquier endpoint protegido de la API", "when": "se llama sin sesión", "then": "responde 401"},
+    {"id": "AC-RNF01-03", "given": "un auditor de ORG-A", "when": "intenta reservar, despachar, cancelar o invocar el asistente sobre un recurso de ORG-A", "then": "cada operación responde 403 y no modifica datos"},
+    {"id": "AC-RNF01-04", "given": "un usuario de bodega de ORG-A", "when": "intenta reservar una solicitud ENVIADA de ORG-A", "then": "responde 403, el estado sigue ENVIADA y el inventario no cambia"},
+    {"id": "AC-RNF06-01", "given": "un intento fallido de login con una contraseña de prueba", "when": "se revisan respuesta y logs estructurados", "then": "la respuesta incluye correlationId, el log lo incluye, y ni la contraseña ni identificadores de sesión aparecen en ninguno"}
+  ]
+}
+```
+<!-- spec-data:end -->
+
+## Decisiones y aclaraciones
+- Q-06 (sesiones), Q-12 (403 entre solicitantes), ver `docs/clarifications.md` y ADR-0003.
+- El cuerpo de error estándar es `{ "error": { "code", "message", "correlationId", "fields?" } }`.
+
+## Riesgos y plan de prueba
+- Riesgo: enumeración de usuarios por tiempos de respuesta. Control: verificación de hash aun con usuario inexistente (hash ficticio).
+- Riesgo: IDOR. Control: toda consulta filtra por `org_id` de la sesión; pruebas cruzadas.
+- Pruebas: dominio (matriz rol-operación como tabla), API con base real, seguridad (SPEC-001 completa), regresión.
+
+## Historial de cambios
+- 0.1.0 Borrador inicial para G1.

@@ -1,0 +1,460 @@
+openapi: 3.1.1
+info:
+  title: NexoEntrega 360 API
+  version: 0.1.0
+  description: >
+    Contrato HTTP de la primera versión. Borrador para G2; debe coincidir con el código
+    entregado (la comprobación se ejecuta en CI). Semántica de errores: 401 sin identidad,
+    403 rol sin permiso sobre un recurso de la propia organización, 404 recurso inexistente
+    o de otra organización, 409 transición, disponibilidad o conflicto de idempotencia,
+    422 validación. La organización y el rol salen de la sesión, nunca del cliente.
+servers:
+  - url: http://localhost:3000
+security:
+  - sessionCookie: []
+tags:
+  - name: operación
+  - name: identidad
+  - name: solicitudes
+  - name: inventario
+  - name: consultas
+  - name: asistente
+paths:
+  /health:
+    get:
+      tags: [operación]
+      operationId: health
+      summary: El proceso está vivo
+      security: []
+      responses:
+        "200": { description: Vivo, content: { application/json: { schema: { $ref: "#/components/schemas/Health" } } } }
+  /ready:
+    get:
+      tags: [operación]
+      operationId: ready
+      summary: Base de datos y migraciones disponibles
+      security: []
+      responses:
+        "200": { description: Listo, content: { application/json: { schema: { $ref: "#/components/schemas/Health" } } } }
+        "503": { $ref: "#/components/responses/Error" }
+  /auth/login:
+    post:
+      tags: [identidad]
+      operationId: login
+      summary: Inicia sesión con una cuenta sembrada
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/LoginRequest" }
+      responses:
+        "200":
+          description: Sesión creada; la cookie se entrega en Set-Cookie
+          content: { application/json: { schema: { $ref: "#/components/schemas/Me" } } }
+        "401": { $ref: "#/components/responses/Error" }
+        "422": { $ref: "#/components/responses/Error" }
+  /auth/logout:
+    post:
+      tags: [identidad]
+      operationId: logout
+      summary: Cierra la sesión actual
+      responses:
+        "204": { description: Sesión cerrada }
+        "401": { $ref: "#/components/responses/Error" }
+  /me:
+    get:
+      tags: [identidad]
+      operationId: me
+      summary: Identidad de la sesión
+      responses:
+        "200": { description: Identidad, content: { application/json: { schema: { $ref: "#/components/schemas/Me" } } } }
+        "401": { $ref: "#/components/responses/Error" }
+  /requests:
+    get:
+      tags: [consultas]
+      operationId: listRequests
+      summary: Lista solicitudes (el solicitante ve solo las suyas)
+      parameters:
+        - { name: page, in: query, schema: { type: integer, minimum: 1, default: 1 } }
+        - { name: pageSize, in: query, schema: { type: integer, minimum: 1, maximum: 100, default: 20 } }
+        - { name: status, in: query, schema: { $ref: "#/components/schemas/RequestStatus" } }
+        - { name: priority, in: query, schema: { $ref: "#/components/schemas/Priority" } }
+        - { name: zone, in: query, schema: { $ref: "#/components/schemas/Zone" } }
+      responses:
+        "200": { description: Página de solicitudes, content: { application/json: { schema: { $ref: "#/components/schemas/RequestPage" } } } }
+        "401": { $ref: "#/components/responses/Error" }
+        "403": { $ref: "#/components/responses/Error" }
+        "422": { $ref: "#/components/responses/Error" }
+    post:
+      tags: [solicitudes]
+      operationId: createRequest
+      summary: Crea un borrador (solo SOLICITANTE)
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/RequestInput" } } }
+      responses:
+        "201": { description: Borrador creado, content: { application/json: { schema: { $ref: "#/components/schemas/Request" } } } }
+        "401": { $ref: "#/components/responses/Error" }
+        "403": { $ref: "#/components/responses/Error" }
+        "422": { $ref: "#/components/responses/Error" }
+  /requests/{id}:
+    parameters:
+      - { $ref: "#/components/parameters/RequestId" }
+    get:
+      tags: [consultas]
+      operationId: getRequest
+      summary: Detalle de una solicitud con su historial
+      responses:
+        "200": { description: Solicitud, content: { application/json: { schema: { $ref: "#/components/schemas/Request" } } } }
+        "401": { $ref: "#/components/responses/Error" }
+        "403": { $ref: "#/components/responses/Error" }
+        "404": { $ref: "#/components/responses/Error" }
+    put:
+      tags: [solicitudes]
+      operationId: updateDraft
+      summary: Edita un borrador propio
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/RequestInput" } } }
+      responses:
+        "200": { description: Borrador actualizado, content: { application/json: { schema: { $ref: "#/components/schemas/Request" } } } }
+        "401": { $ref: "#/components/responses/Error" }
+        "403": { $ref: "#/components/responses/Error" }
+        "404": { $ref: "#/components/responses/Error" }
+        "409": { $ref: "#/components/responses/Error" }
+        "422": { $ref: "#/components/responses/Error" }
+  /requests/{id}/submit:
+    post:
+      tags: [solicitudes]
+      operationId: submitRequest
+      summary: BORRADOR a ENVIADA (solicitante dueño)
+      parameters: [{ $ref: "#/components/parameters/RequestId" }]
+      responses:
+        "200": { $ref: "#/components/responses/Transitioned" }
+        "401": { $ref: "#/components/responses/Error" }
+        "403": { $ref: "#/components/responses/Error" }
+        "404": { $ref: "#/components/responses/Error" }
+        "409": { $ref: "#/components/responses/Error" }
+        "422": { $ref: "#/components/responses/Error" }
+  /requests/{id}/reserve:
+    post:
+      tags: [inventario]
+      operationId: reserveRequest
+      summary: ENVIADA a RESERVADA, todo o nada (coordinador)
+      description: >
+        Exige Idempotency-Key. Misma clave, usuario, organización, operación y contenido repite el
+        resultado durante al menos 24 horas; misma clave con contenido distinto devuelve 409.
+        Se almacenan resultados 200 y 409 de negocio; no se almacenan 401, 403, 404, 422 ni 5xx.
+      parameters:
+        - { $ref: "#/components/parameters/RequestId" }
+        - { $ref: "#/components/parameters/IdempotencyKey" }
+      responses:
+        "200": { $ref: "#/components/responses/Transitioned" }
+        "400": { $ref: "#/components/responses/Error" }
+        "401": { $ref: "#/components/responses/Error" }
+        "403": { $ref: "#/components/responses/Error" }
+        "404": { $ref: "#/components/responses/Error" }
+        "409": { $ref: "#/components/responses/Error" }
+  /requests/{id}/cancel:
+    post:
+      tags: [inventario]
+      operationId: cancelRequest
+      summary: ENVIADA o RESERVADA a CANCELADA (solicitante dueño)
+      parameters: [{ $ref: "#/components/parameters/RequestId" }]
+      responses:
+        "200": { $ref: "#/components/responses/Transitioned" }
+        "401": { $ref: "#/components/responses/Error" }
+        "403": { $ref: "#/components/responses/Error" }
+        "404": { $ref: "#/components/responses/Error" }
+        "409": { $ref: "#/components/responses/Error" }
+  /requests/{id}/dispatch:
+    post:
+      tags: [inventario]
+      operationId: dispatchRequest
+      summary: RESERVADA a DESPACHADA (bodega)
+      parameters: [{ $ref: "#/components/parameters/RequestId" }]
+      responses:
+        "200": { $ref: "#/components/responses/Transitioned" }
+        "401": { $ref: "#/components/responses/Error" }
+        "403": { $ref: "#/components/responses/Error" }
+        "404": { $ref: "#/components/responses/Error" }
+        "409": { $ref: "#/components/responses/Error" }
+  /requests/{id}/deliver:
+    post:
+      tags: [inventario]
+      operationId: deliverRequest
+      summary: DESPACHADA a ENTREGADA (coordinador)
+      parameters: [{ $ref: "#/components/parameters/RequestId" }]
+      responses:
+        "200": { $ref: "#/components/responses/Transitioned" }
+        "401": { $ref: "#/components/responses/Error" }
+        "403": { $ref: "#/components/responses/Error" }
+        "404": { $ref: "#/components/responses/Error" }
+        "409": { $ref: "#/components/responses/Error" }
+  /dashboard:
+    get:
+      tags: [consultas]
+      operationId: dashboard
+      summary: Conteo por estado y existencias por SKU de la organización
+      responses:
+        "200": { description: Tablero, content: { application/json: { schema: { $ref: "#/components/schemas/Dashboard" } } } }
+        "401": { $ref: "#/components/responses/Error" }
+        "403": { $ref: "#/components/responses/Error" }
+  /audit-events:
+    get:
+      tags: [consultas]
+      operationId: listAuditEvents
+      summary: Auditoría de la organización (solo AUDITOR)
+      parameters:
+        - { name: page, in: query, schema: { type: integer, minimum: 1, default: 1 } }
+        - { name: pageSize, in: query, schema: { type: integer, minimum: 1, maximum: 100, default: 20 } }
+      responses:
+        "200": { description: Página de eventos, content: { application/json: { schema: { $ref: "#/components/schemas/AuditPage" } } } }
+        "401": { $ref: "#/components/responses/Error" }
+        "403": { $ref: "#/components/responses/Error" }
+        "422": { $ref: "#/components/responses/Error" }
+  /ai/summaries:
+    post:
+      tags: [asistente]
+      operationId: createSummary
+      summary: Resumen y recomendaciones de hasta 20 solicitudes ENVIADA (coordinador)
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/SummaryRequest" } } }
+      responses:
+        "200": { description: Borrador de resumen (origen ai o fallback), content: { application/json: { schema: { $ref: "#/components/schemas/SummaryDraft" } } } }
+        "401": { $ref: "#/components/responses/Error" }
+        "403": { $ref: "#/components/responses/Error" }
+        "404": { $ref: "#/components/responses/Error" }
+        "422": { $ref: "#/components/responses/Error" }
+  /ai/summaries/{summaryId}/approve:
+    post:
+      tags: [asistente]
+      operationId: approveSummary
+      summary: Aprueba un borrador; no reserva, despacha ni cambia prioridad
+      parameters:
+        - { name: summaryId, in: path, required: true, schema: { type: string, format: uuid } }
+      responses:
+        "200": { description: Constancia de aprobación, content: { application/json: { schema: { $ref: "#/components/schemas/SummaryDraft" } } } }
+        "401": { $ref: "#/components/responses/Error" }
+        "403": { $ref: "#/components/responses/Error" }
+        "404": { $ref: "#/components/responses/Error" }
+        "409": { $ref: "#/components/responses/Error" }
+components:
+  securitySchemes:
+    sessionCookie:
+      type: apiKey
+      in: cookie
+      name: nexo_session
+  parameters:
+    RequestId:
+      name: id
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      schema: { type: string, minLength: 8, maxLength: 128 }
+  responses:
+    Error:
+      description: Error estándar con correlationId
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/ErrorResponse" }
+    Transitioned:
+      description: Transición aplicada
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Request" }
+  schemas:
+    Health:
+      type: object
+      required: [status]
+      additionalProperties: false
+      properties:
+        status: { type: string, enum: [ok, unavailable] }
+    ErrorResponse:
+      type: object
+      required: [error]
+      additionalProperties: false
+      properties:
+        error:
+          type: object
+          required: [code, message, correlationId]
+          additionalProperties: false
+          properties:
+            code: { type: string }
+            message: { type: string }
+            correlationId: { type: string }
+            fields:
+              type: array
+              items:
+                type: object
+                required: [field, message]
+                additionalProperties: false
+                properties:
+                  field: { type: string }
+                  message: { type: string }
+    Role: { type: string, enum: [SOLICITANTE, COORDINADOR, BODEGA, AUDITOR] }
+    RequestStatus: { type: string, enum: [BORRADOR, ENVIADA, RESERVADA, DESPACHADA, ENTREGADA, CANCELADA] }
+    Priority: { type: string, enum: [NORMAL, ALTA] }
+    Zone: { type: string, enum: [NORTE, SUR, CENTRO, RIBERA] }
+    LoginRequest:
+      type: object
+      required: [email, password]
+      additionalProperties: false
+      properties:
+        email: { type: string, format: email, maxLength: 254 }
+        password: { type: string, minLength: 1, maxLength: 128 }
+    Me:
+      type: object
+      required: [id, displayName, role, organization]
+      additionalProperties: false
+      properties:
+        id: { type: string, format: uuid }
+        displayName: { type: string }
+        role: { $ref: "#/components/schemas/Role" }
+        organization:
+          type: object
+          required: [id, code, name]
+          additionalProperties: false
+          properties:
+            id: { type: string, format: uuid }
+            code: { type: string }
+            name: { type: string }
+    RequestLineInput:
+      type: object
+      required: [sku, quantity]
+      additionalProperties: false
+      properties:
+        sku: { type: string }
+        quantity: { type: integer, minimum: 1, maximum: 500 }
+    RequestInput:
+      type: object
+      required: [zone, priority, requiredDate, lines]
+      additionalProperties: false
+      properties:
+        zone: { $ref: "#/components/schemas/Zone" }
+        priority: { $ref: "#/components/schemas/Priority" }
+        requiredDate: { type: string, format: date, description: "YYYY-MM-DD evaluada en America/Bogota" }
+        notes: { type: string, maxLength: 500 }
+        lines:
+          type: array
+          maxItems: 10
+          items: { $ref: "#/components/schemas/RequestLineInput" }
+    Request:
+      type: object
+      required: [id, code, status, zone, priority, requiredDate, lines, createdAt]
+      additionalProperties: false
+      properties:
+        id: { type: string, format: uuid }
+        code: { type: string }
+        status: { $ref: "#/components/schemas/RequestStatus" }
+        zone: { $ref: "#/components/schemas/Zone" }
+        priority: { $ref: "#/components/schemas/Priority" }
+        requiredDate: { type: string, format: date }
+        notes: { type: [string, "null"] }
+        lines:
+          type: array
+          items: { $ref: "#/components/schemas/RequestLineInput" }
+        requesterId: { type: string, format: uuid }
+        createdAt: { type: string, format: date-time }
+        history:
+          type: array
+          items: { $ref: "#/components/schemas/AuditEvent" }
+    RequestPage:
+      type: object
+      required: [items, total, page, pageSize]
+      additionalProperties: false
+      properties:
+        items: { type: array, maxItems: 100, items: { $ref: "#/components/schemas/Request" } }
+        total: { type: integer, minimum: 0 }
+        page: { type: integer, minimum: 1 }
+        pageSize: { type: integer, minimum: 1, maximum: 100 }
+    Dashboard:
+      type: object
+      required: [byStatus, inventory]
+      additionalProperties: false
+      properties:
+        byStatus:
+          type: object
+          additionalProperties: { type: integer, minimum: 0 }
+        inventory:
+          type: array
+          items:
+            type: object
+            required: [sku, onHand, reserved, available]
+            additionalProperties: false
+            properties:
+              sku: { type: string }
+              onHand: { type: integer, minimum: 0 }
+              reserved: { type: integer, minimum: 0 }
+              available: { type: integer, minimum: 0 }
+    AuditEvent:
+      type: object
+      required: [id, occurredAt, actorId, actorRole, resourceType, resourceId, action, correlationId]
+      additionalProperties: false
+      properties:
+        id: { type: integer }
+        occurredAt: { type: string, format: date-time, description: UTC }
+        actorId: { type: string, format: uuid }
+        actorRole: { $ref: "#/components/schemas/Role" }
+        resourceType: { type: string }
+        resourceId: { type: string, format: uuid }
+        action: { type: string }
+        fromStatus: { type: [string, "null"] }
+        toStatus: { type: [string, "null"] }
+        correlationId: { type: string }
+    AuditPage:
+      type: object
+      required: [items, total, page, pageSize]
+      additionalProperties: false
+      properties:
+        items: { type: array, maxItems: 100, items: { $ref: "#/components/schemas/AuditEvent" } }
+        total: { type: integer, minimum: 0 }
+        page: { type: integer, minimum: 1 }
+        pageSize: { type: integer, minimum: 1, maximum: 100 }
+    SummaryRequest:
+      type: object
+      required: [requestIds]
+      additionalProperties: false
+      properties:
+        requestIds:
+          type: array
+          minItems: 1
+          maxItems: 20
+          uniqueItems: true
+          items: { type: string, format: uuid }
+    SummaryDraft:
+      type: object
+      required: [id, origin, label, summary, recommendations, requestIds]
+      additionalProperties: false
+      properties:
+        id: { type: string, format: uuid }
+        origin: { type: string, enum: [ai, fallback] }
+        label: { type: string, description: "Asistencia de IA o resumen automático sin IA" }
+        message: { type: string, description: Mensaje controlado cuando hubo fallback }
+        summary: { type: string, maxLength: 600 }
+        recommendations:
+          type: array
+          maxItems: 5
+          items:
+            type: object
+            required: [requestId, reason, evidenceFields]
+            additionalProperties: false
+            properties:
+              requestId: { type: string, minLength: 1, description: "Código de la solicitud (requests.code), p. ej. A-001; no el UUID interno" }
+              reason: { type: string, maxLength: 240 }
+              evidenceFields:
+                type: array
+                minItems: 1
+                maxItems: 3
+                items: { type: string, enum: [zona, prioridad, fechaRequerida, observaciones] }
+        requestIds:
+          type: array
+          items: { type: string, format: uuid }
+        approvedAt: { type: [string, "null"], format: date-time }
+        provider: { type: string, enum: [live, local, replay, fixture, none] }

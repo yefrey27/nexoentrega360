@@ -1,0 +1,16 @@
+{
+  "name": "nexoentrega-api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "@node-rs/argon2": "2.0.2",
+    "express": "4.21.2",
+    "pg": "8.13.1"
+  }
+}
