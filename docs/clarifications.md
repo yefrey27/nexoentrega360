@@ -25,7 +25,7 @@ Los valores explícitos del enunciado prevalecen sobre cualquier propuesta o sug
 | Q-09 | Sí | PENDIENTE | PENDIENTE |
 | Q-10 | No (decisión del equipo) | n/a | n/a |
 | Q-11 | No (decisión del equipo) | n/a | n/a |
-| Q-12 | No (supuesto literal del enunciado) | n/a | n/a |
+| Q-12 | Confirmación opcional (supuesto literal del enunciado; ver H1-06) | PENDIENTE | PENDIENTE |
 | Q-13 | Sí | PENDIENTE | PENDIENTE |
 | Q-14 | Sí | PENDIENTE | PENDIENTE |
 

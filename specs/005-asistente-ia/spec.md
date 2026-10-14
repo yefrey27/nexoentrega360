@@ -8,7 +8,7 @@ Alcance: resumen y recomendaciones para el coordinador con proveedor intercambia
 ```json
 {
   "id": "SPEC-005",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "name": "Asistente de IA",
   "story": {
     "id": "HU-05",
@@ -100,3 +100,4 @@ Alcance: resumen y recomendaciones para el coordinador con proveedor intercambia
 
 ## Historial de cambios
 - 0.1.0 Borrador inicial para G1.
+- 0.1.1 El requestId del adaptador de IA es el código de la solicitud (requests.code, p. ej. A-001) y no el UUID interno, para coincidir con los fixtures oficiales; regla de negocio y paso de payload ajustados. Pendiente de revisión humana.

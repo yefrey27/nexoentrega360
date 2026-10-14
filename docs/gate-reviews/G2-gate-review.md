@@ -41,7 +41,7 @@ Esta hoja la completa una persona. "Verificado" significa que lo comprobó una m
 | H2-02 | `docker-compose.yml` no se arrancó | RNF04 sin evidencia de arranque | Ejecutar `docker compose -f infra/docker-compose.yml --env-file .env up -d db` y verificar que queda sano; anotar tiempo | Abierto |
 | H2-03 | El script `infra/initdb/01-roles.sh` se probó contra un clúster local, no dentro del contenedor | El entorno de ejecución de la imagen oficial puede variar | Verificar al arrancar Compose que existe el rol nexo_app con LOGIN | Abierto |
 | H2-04 | No existe prueba de contrato (API contra OpenAPI) porque no hay API | Contrato sin verificación automática | Implementarla en T-25 | Abierto |
-| H2-05 | Los datos del oráculo se contrastarán con el anexo oficial en T-04 (ver H1-02) | Posible cambio de números | Contrastar | Abierto |
+| H2-05 | Los datos del oráculo se contrastarán con el anexo oficial en T-04 (ver H1-02) | Posible cambio de números | Contrastar | Cerrado por el autor: ver H1-02 (sin diferencias); falta contrastar el seed real al implementar T-04 |
 | H2-06 | Los ADR están en estado propuesto hasta que exista revisor y fecha | G2 no se puede cerrar | Ver excepción de trabajo individual en G1 | Abierto |
 | H2-07 | La limpieza de claves de idempotencia vencidas está descrita pero no implementada | La tabla crece | Añadir tarea de mantenimiento y documentarla en el runbook | Abierto |
 
