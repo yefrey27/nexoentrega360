@@ -116,4 +116,4 @@ Estas preguntas no se enviaron al cliente. Se aplican los supuestos provisionale
 - **Riesgo:** reutilizar una clave ajena podría devolver la respuesta de otro usuario.
 - **Propuesta:** la clave se almacena con org_id, user_id, operation y key; otro usuario con la misma clave ejecuta una operación independiente.
 - **Supuesto provisional:** la propuesta. **Impacto:** alto. **Responsable:** Yefrey.
-- **Verificación:** caso 3 de apps/api/test/idempotency.test.js.
+- **Verificación:** prueba "misma clave de otro usuario: no recibe la respuesta ajena" en apps/api/test/idempotency.test.js.
