@@ -1,0 +1,27 @@
+# NexoEntrega 360 · infraestructura local
+# Uso: cp .env.example .env && docker compose -f infra/docker-compose.yml --env-file .env up -d db
+# Versión de PostgreSQL fijada a 16.4 (RNF04).
+name: nexoentrega
+
+services:
+  db:
+    image: postgres:16.4
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      NEXO_APP_PASSWORD: ${NEXO_APP_PASSWORD}
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - nexo_pgdata:/var/lib/postgresql/data
+      - ./initdb:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+volumes:
+  nexo_pgdata:
