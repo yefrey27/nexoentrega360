@@ -110,3 +110,10 @@ Estas preguntas no se enviaron al cliente. Se aplican los supuestos provisionale
 - **Riesgo:** aprobar un resumen sobre solicitudes que ya cambiaron de estado deja una constancia engañosa.
 - **Propuesta:** se puede aprobar tanto el resumen de IA como el alternativo; la constancia registra el origen (`ai` o `fallback`) y los IDs. Al aprobar se muestra la advertencia si alguna solicitud ya no está ENVIADA, y la aprobación igualmente registra el estado de cada una en ese momento. Aprobar no cambia ningún estado.
 - **Supuesto provisional:** la propuesta. **Impacto:** medio. **Responsable:** Yefrey.
+
+### Q-15 Idempotency-Key entre usuarios y organizaciones
+- **Requisito afectado:** RF07, RNF02.
+- **Riesgo:** reutilizar una clave ajena podría devolver la respuesta de otro usuario.
+- **Propuesta:** la clave se almacena con org_id, user_id, operation y key; otro usuario con la misma clave ejecuta una operación independiente.
+- **Supuesto provisional:** la propuesta. **Impacto:** alto. **Responsable:** Yefrey.
+- **Verificación:** prueba "misma clave de otro usuario: no recibe la respuesta ajena" en apps/api/test/idempotency.test.js.
