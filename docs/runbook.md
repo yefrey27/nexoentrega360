@@ -35,7 +35,7 @@ cd apps/api && npm test
 - SPECS: `python3 scripts/export_specs.py --check`
 - Contratos: `python3 scripts/validate_contracts.py` (requiere openapi-spec-validator, jsonschema y pyyaml).
 - Migración: `scripts/test_migration.sh`
-- Health y readiness: PENDIENTE documentar rutas y verificarlas.
+- Health y readiness: `curl -i http://127.0.0.1:3000/health` (proceso vivo) y `curl -i http://127.0.0.1:3000/ready` (base y migraciones). Verificado: PENDIENTE de pegar resultado.
 
 ## 5. Datos de demostración
 `scripts/seed.sh` carga `seeds/seed_small.sql` y reinicia los datos de demostración. Cuentas: `org-{a|b}-{solicitante|coordinador|bodega|auditor}@example.test`. Las contraseñas ficticias están en el seed; para regenerar, volver a ejecutar `scripts/seed.sh`.
@@ -45,8 +45,8 @@ El producto sigue funcionando. Con `AI_PROVIDER=none` (por defecto) el coordinad
 
 ## 7. Reversión
 - Aplicación: volver al tag anterior (`git checkout baseline-v1`) y reiniciar la API.
-- Esquema: `scripts/migrate.sh` solo aplica migraciones hacia adelante. PENDIENTE confirmar si hay migraciones inversas. No se promete revertir datos sin copia de seguridad; copia probada: PENDIENTE.
-- Compatibilidad entre versión previa y esquema migrado: PENDIENTE de verificar.
+- Esquema: solo existe `migrations/0001_init.sql`; `scripts/migrate.sh` aplica hacia adelante y no hay migraciones inversas. Revertir datos exige copia de seguridad; copia probada: PENDIENTE.
+- Compatibilidad: con una sola migración (0001_init), la versión previa y la actual comparten el mismo esquema. Revisar si se añade otra migración.
 
 ## 8. Problemas conocidos
 - `01-roles.sh` solo corre con volumen vacío; si falla la conexión de `nexo_app`, ejecutar `docker compose -f infra/docker-compose.yml down -v` y volver a arrancar (borra los datos locales).
