@@ -10,7 +10,7 @@ Estado al 2026-10-14. Las pruebas locales corrieron con PostgreSQL 18.6 portable
 | R-04 | Fallo o salida inválida del proveedor de IA | Alta | Medio | Resumen alternativo; 8 fixtures; AI_PROVIDER=none por defecto | evidence/tests/ia-fixtures-*.txt | Probado; salida de un LLM real pendiente |
 | R-05 | Servicio no distingue vivo de listo | Baja | Medio | /health y /ready diferenciados | evidence/tests/health-ready-*.txt | Probado: 200 con base arriba, 503 con base caída, recuperación sin reiniciar |
 | R-06 | Arranque no reproducible en 15 min | Alta | Alto | Compose con PostgreSQL 16.4; sin comando único de arranque ni de verificación | docs/runbook.md | GAP ABIERTO (RNF04). El Compose no se ha ejecutado en la máquina de desarrollo |
-| R-07 | Versión de BD local distinta de la fijada | Media | Medio | CI con PostgreSQL 16.4 | .github/workflows/ci.yml | Mitigado solo si el CI está en verde: NO verificado |
+| R-07 | Versión de BD local distinta de la fijada | Media | Medio | CI con PostgreSQL 16.4 | .github/workflows/ci.yml | Mitigado: CI en verde con PostgreSQL 16.4 (ci.yml línea 32), corrida CI 18 sobre main, commit 3337c9e (https://github.com/yefrey27/nexoentrega360/actions); pruebas locales 79/79 (evidence/tests/t14-t23-run.txt) |
 | R-08 | Rendimiento sin medir (RNF03) | Media | Medio | Ninguno todavía | — | GAP ABIERTO: sin seed de 2.000 solicitudes ni k6 |
 | R-09 | Dependencias vulnerables (express 4.21.2) | Media | Medio | npm audit visible, continue-on-error | ci.yml | ABIERTO: 2 vulnerabilidades altas sin actualizar |
 | R-10 | Interfaz sin revisar en móvil ni teclado (RNF05) | Media | Medio | Ninguno todavía | — | GAP ABIERTO |
