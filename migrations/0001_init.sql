@@ -22,7 +22,7 @@ CREATE TYPE zone_code      AS ENUM ('NORTE', 'SUR', 'CENTRO', 'RIBERA');
 -- Organizaciones y usuarios ----------------------------------------------
 CREATE TABLE organizations (
   id         uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  code       text NOT NULL UNIQUE CHECK (code ~ '^[A-Z0-9]{2,10}$'),
+  code       text NOT NULL UNIQUE CHECK (code ~ '^[A-Z0-9-]{2,10}$'),
   name       text NOT NULL,
   created_at timestamptz NOT NULL DEFAULT now()
 );

@@ -1,0 +1,32 @@
+commit: 279c65319dd26babde5d122b358db373075992e5
+fecha UTC: 2026-10-14T06:51:27Z
+comando: cd apps/api && npm test
+✔ IA AI-VALID: origen ai, intento ok, inventario y estados intactos (1183.9475ms)
+✔ IA AI-JSON-BAD: origen fallback, intento invalid_output, inventario y estados intactos (756.7437ms)
+✔ IA AI-EXTRA: origen fallback, intento invalid_output, inventario y estados intactos (669.0283ms)
+✔ IA AI-FOREIGN-ID: origen fallback, intento invalid_output, inventario y estados intactos (638.4285ms)
+✔ IA AI-INJECTION: origen fallback, intento invalid_output, inventario y estados intactos (630.6595ms)
+✔ IA AI-TIMEOUT: origen fallback, intento timeout, inventario y estados intactos (942.7287ms)
+✔ IA AI-ERROR: origen fallback, intento provider_error, inventario y estados intactos (619.8357ms)
+✔ IA AI-DUPLICATE-ID: origen fallback, intento invalid_output, inventario y estados intactos (644.0578ms)
+✔ IA: instrucciones maliciosas en observaciones se tratan como dato, no como orden (604.7751ms)
+✔ IA: ID de otra organización responde 404 y no invoca al proveedor ni guarda intento (1048.8365ms)
+✔ PUT sin sesión responde 401 (176.6717ms)
+✔ el solicitante edita su borrador: cambian los datos y las líneas, el estado y el inventario no (945.1041ms)
+✔ edición con cantidad 0: 422 y el borrador queda como estaba (671.2906ms)
+✔ una solicitud ENVIADA no se edita: 409 sin cambios (708.3493ms)
+✔ seguridad: el coordinador recibe 403 y el solicitante de ORG-B recibe 404, sin cambios (1507.4872ms)
+✔ sin sesión responde 401 (135.5806ms)
+✔ A-001 contra A-002 en paralelo: una reserva y un 409; 10/7/3; cancelar libera (1622.3677ms)
+✔ flujo completo, idempotencia y auditoría (2301.8994ms)
+✔ aislamiento entre organizaciones y permisos por rol (1966.5205ms)
+✔ validación de entrada: 422 sin crear nada (769.2336ms)
+✔ asistente sin proveedor: resumen alternativo, aprobación única, solo coordinador (1605.9776ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 22385.7963
