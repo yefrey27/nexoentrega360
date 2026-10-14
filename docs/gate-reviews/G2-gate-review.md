@@ -9,7 +9,7 @@
 | Fecha UTC de la revisión | PENDIENTE |
 | Autor | Yefrey (con asistencia de IA; ver evidence/ai-log/) |
 | Revisor (persona distinta al autor) | PENDIENTE |
-| Pull request | PENDIENTE (rama g2-plan) |
+| Pull request | https://github.com/yefrey27/nexoentrega360/pull/1 |
 
 Esta hoja la completa una persona. "Verificado" significa que lo comprobó una máquina y se repite con el comando indicado.
 
