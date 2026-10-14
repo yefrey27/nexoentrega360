@@ -1,0 +1,7 @@
+commit: 13053d7214d936c0379d02d6d140ab21d67259c1
+fecha UTC: 2026-10-14T08:18:36Z
+comando: curl -i http://127.0.0.1:3000/health y /ready
+base arriba (08:16 UTC): /health 200 {status:ok}; /ready 200 {status:ok}
+base caida (08:18 UTC): /ready 503 {status:unavailable}; /health 200 {status:ok}
+cada respuesta lleva x-correlation-id distinto
+Recuperacion tras reiniciar la base (08:31:39Z): /ready vuelve a 200 sin reiniciar la API (primera lectura del bucle; PostgreSQL 18.6 portable, no la 16.4 fijada)
