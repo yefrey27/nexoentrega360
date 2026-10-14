@@ -1,0 +1,27 @@
+commit: e850318f207ae1e8beb3f598e711c9c19de81ae8
+fecha UTC: 2026-10-14T06:42:44Z
+comando: cd apps/api && npm test
+✔ IA AI-VALID: origen ai, intento ok, inventario y estados intactos (1703.8083ms)
+✔ IA AI-JSON-BAD: origen fallback, intento invalid_output, inventario y estados intactos (1241.4276ms)
+✔ IA AI-EXTRA: origen fallback, intento invalid_output, inventario y estados intactos (882.6757ms)
+✔ IA AI-FOREIGN-ID: origen fallback, intento invalid_output, inventario y estados intactos (1202.0555ms)
+✔ IA AI-INJECTION: origen fallback, intento invalid_output, inventario y estados intactos (1191.5394ms)
+✔ IA AI-TIMEOUT: origen fallback, intento timeout, inventario y estados intactos (1174.5455ms)
+✔ IA AI-ERROR: origen fallback, intento provider_error, inventario y estados intactos (1240.6225ms)
+✔ IA AI-DUPLICATE-ID: origen fallback, intento invalid_output, inventario y estados intactos (1187.1104ms)
+✔ IA: instrucciones maliciosas en observaciones se tratan como dato, no como orden (1619.6935ms)
+✔ IA: ID de otra organización responde 404 y no invoca al proveedor ni guarda intento (1429.8564ms)
+✔ sin sesión responde 401 (144.8521ms)
+✔ A-001 contra A-002 en paralelo: una reserva y un 409; 10/7/3; cancelar libera (2155.7876ms)
+✔ flujo completo, idempotencia y auditoría (3075.6173ms)
+✔ aislamiento entre organizaciones y permisos por rol (3764.5768ms)
+✔ validación de entrada: 422 sin crear nada (1456.8045ms)
+✔ asistente sin proveedor: resumen alternativo, aprobación única, solo coordinador (1425.6236ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 26529.4708
