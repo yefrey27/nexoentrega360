@@ -35,7 +35,7 @@ cd apps/api && npm test
 - SPECS: `python3 scripts/export_specs.py --check`
 - Contratos: `python3 scripts/validate_contracts.py` (requiere openapi-spec-validator, jsonschema y pyyaml).
 - Migración: `scripts/test_migration.sh`
-- Health y readiness: `curl -i http://127.0.0.1:3000/health` (proceso vivo) y `curl -i http://127.0.0.1:3000/ready` (base y migraciones). Verificado: PENDIENTE de pegar resultado.
+- Health y readiness: `curl -i http://127.0.0.1:3000/health` (proceso vivo) y `curl -i http://127.0.0.1:3000/ready` (base y migraciones). Verificado el 2026-10-14: base arriba 200 en ambas; base caída /ready 503 y /health 200 (evidence/tests/health-ready-*.txt).
 
 ## 5. Datos de demostración
 `scripts/seed.sh` carga `seeds/seed_small.sql` y reinicia los datos de demostración. Cuentas: `org-{a|b}-{solicitante|coordinador|bodega|auditor}@example.test`. Las contraseñas ficticias están en el seed; para regenerar, volver a ejecutar `scripts/seed.sh`.
