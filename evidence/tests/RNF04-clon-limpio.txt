@@ -1,0 +1,7 @@
+RNF04 - arranque desde clon limpio
+Fecha UTC: 2026-10-14T19:12:13Z | Node v24.21.0 | MINGW64_NT-10.0-19044
+Cloning into 'C:/Users/YANF/AppData/Local/Temp/tmp.cJG055cJlO/clon'...
+Switched to a new branch 'main'
+branch 'main' set up to track 'origin/main'.
+Commit probado: 0c2f13d3210849cc8ec054bc3bc2f4c52f92d7db
+bash: docker: command not found
