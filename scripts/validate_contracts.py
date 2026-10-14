@@ -27,7 +27,22 @@ cases = {
     "summary de 601 caracteres": ({"summary": "x" * 601, "recommendations": []}, False),
     "6 recomendaciones": ({"summary": "x", "recommendations": [rec] * 6}, False),
     "reason de 241 caracteres": ({"summary": "x", "recommendations": [{**rec, "reason": "r" * 241}]}, False),
+    "requestId vacío": ({"summary": "x", "recommendations": [{**rec, "requestId": ""}]}, False),
 }
+# Fixtures oficiales del anexo (ai-provider-fixtures.json), si se copiaron a tests/fixtures/ai/
+fx_path = root / "tests/fixtures/ai/ai-provider-fixtures.json"
+if fx_path.exists():
+    for fx in json.loads(fx_path.read_text(encoding="utf-8"))["fixtures"]:
+        raw = fx.get("rawOutput")
+        if raw is None:
+            continue
+        try:
+            doc = json.loads(raw)
+        except ValueError:
+            cases[f"fixture {fx['id']} (JSON inválido)"] = ({}, False)
+            continue
+        # AI-VALID, AI-FOREIGN-ID y AI-INJECTION son válidos para el esquema; el ID ajeno lo rechaza el código.
+        cases[f"fixture {fx['id']}"] = (doc, fx["id"] in ("AI-VALID", "AI-FOREIGN-ID", "AI-INJECTION"))
 bad = 0
 for name, (doc, expected) in cases.items():
     got = not list(v.iter_errors(doc))

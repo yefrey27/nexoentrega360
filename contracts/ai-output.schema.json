@@ -7,7 +7,7 @@
   "additionalProperties": false,
   "required": ["summary", "recommendations"],
   "properties": {
-    "summary": { "type": "string", "maxLength": 600 },
+    "summary": { "type": "string", "minLength": 1, "maxLength": 600 },
     "recommendations": {
       "type": "array",
       "maxItems": 5,
@@ -16,8 +16,8 @@
         "additionalProperties": false,
         "required": ["requestId", "reason", "evidenceFields"],
         "properties": {
-          "requestId": { "type": "string", "format": "uuid" },
-          "reason": { "type": "string", "maxLength": 240 },
+          "requestId": { "type": "string", "minLength": 1, "description": "Código de la solicitud (requests.code) enviado al adaptador, p. ej. A-001; no es el UUID interno." },
+          "reason": { "type": "string", "minLength": 1, "maxLength": 240 },
           "evidenceFields": {
             "type": "array",
             "minItems": 1,

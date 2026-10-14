@@ -26,7 +26,7 @@ Alcance: resumen y recomendaciones para el coordinador con proveedor intercambia
   "process": [
     "Autenticar y autorizar: solo COORDINADOR solicita y aprueba; Auditor, Bodega y Solicitante reciben 403.",
     "Resolver todos los identificadores dentro de la organización; cualquiera inexistente o ajeno hace responder 404 antes de invocar al proveedor; uno que no esté ENVIADA responde 422.",
-    "Construir el payload con solo requestId, zona, prioridad, fecha requerida, estado y observaciones; sin contraseñas, sesiones, nombre del solicitante ni datos de otra organización.",
+    "Construir el payload con solo requestId (el código de la solicitud), zona, prioridad, fecha requerida, estado y observaciones; sin contraseñas, sesiones, nombre del solicitante ni datos de otra organización.",
     "Invocar al proveedor con timeout de 5 segundos y sin capacidad de escribir inventario ni llamar operaciones.",
     "Validar la salida contra el esquema: summary de hasta 600 caracteres, de 0 a 5 recomendaciones, cada una con requestId del conjunto enviado, sin duplicados, reason de hasta 240 caracteres, evidenceFields de 1 a 3 claves entre zona, prioridad, fechaRequerida u observaciones, y sin propiedades adicionales.",
     "Si la salida es inválida, hay timeout o error del proveedor, generar el resumen determinista alternativo y responder con mensaje controlado.",
@@ -43,6 +43,7 @@ Alcance: resumen y recomendaciones para el coordinador con proveedor intercambia
   ],
   "businessRules": [
     "La prioridad proviene de la solicitud, no del modelo.",
+    "El adaptador identifica cada solicitud por su código (requests.code, p. ej. A-001), no por el UUID interno; la API traduce el código al id y valida en código que cada requestId de la salida pertenezca al conjunto enviado.",
     "La recomendación no es una decisión; el coordinador revisa los datos fuente y actúa con las operaciones normales.",
     "El texto de la IA y las observaciones son contenido no confiable, se muestran escapados y nunca se ejecutan.",
     "Además del esquema se valida en código la pertenencia, el estado y el formato de los IDs.",

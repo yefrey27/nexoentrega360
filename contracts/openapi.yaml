@@ -446,7 +446,7 @@ components:
             required: [requestId, reason, evidenceFields]
             additionalProperties: false
             properties:
-              requestId: { type: string, format: uuid }
+              requestId: { type: string, minLength: 1, description: "Código de la solicitud (requests.code), p. ej. A-001; no el UUID interno" }
               reason: { type: string, maxLength: 240 }
               evidenceFields:
                 type: array

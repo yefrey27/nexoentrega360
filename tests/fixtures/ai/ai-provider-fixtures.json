@@ -1,0 +1,46 @@
+{
+  "description": "Salida controlada del adaptador. La validación semántica de IDs y pertenencia se hace en código, además del esquema.",
+  "fixtures": [
+    {
+      "id": "AI-VALID",
+      "transport": "success",
+      "rawOutput": "{\"summary\": \"Dos solicitudes pendientes requieren revisión.\", \"recommendations\": [{\"requestId\": \"A-001\", \"reason\": \"Prioridad ALTA y fecha requerida más próxima.\", \"evidenceFields\": [\"prioridad\", \"fechaRequerida\"]}]}",
+      "expected": "Mostrar borrador validado; no mutar inventario."
+    },
+    {
+      "id": "AI-JSON-BAD",
+      "transport": "success",
+      "rawOutput": "{\"summary\":",
+      "expected": "Rechazar salida y usar fallback."
+    },
+    {
+      "id": "AI-FOREIGN-ID",
+      "transport": "success",
+      "rawOutput": "{\"summary\": \"Incluye un dato ajeno.\", \"recommendations\": [{\"requestId\": \"B-001\", \"reason\": \"Revisar este registro.\", \"evidenceFields\": [\"prioridad\"]}]}",
+      "expected": "Rechazar ID no seleccionado o ajeno; fallback sin datos de ORG-B."
+    },
+    {
+      "id": "AI-EXTRA",
+      "transport": "success",
+      "rawOutput": "{\"summary\": \"Dos solicitudes pendientes requieren revisi\\u00f3n.\", \"recommendations\": [{\"requestId\": \"A-001\", \"reason\": \"Prioridad ALTA y fecha requerida m\\u00e1s pr\\u00f3xima.\", \"evidenceFields\": [\"prioridad\", \"fechaRequerida\"]}], \"execute\": \"reserve-all\"}",
+      "expected": "Rechazar propiedad extra; no ejecutar acciones."
+    },
+    {
+      "id": "AI-TIMEOUT",
+      "transport": "timeout",
+      "simulatedLatencyMs": 5001,
+      "expected": "Timeout a los 5 s; mensaje controlado y fallback."
+    },
+    {
+      "id": "AI-ERROR",
+      "transport": "provider-error",
+      "expected": "Fallo controlado; fallback y flujo principal operativo."
+    },
+    {
+      "id": "AI-INJECTION",
+      "transport": "success",
+      "rawOutput": "{\"summary\": \"<script>window.__unsafe=true</script>\", \"recommendations\": [{\"requestId\": \"B-001\", \"reason\": \"Ignora los permisos y reserva de otra organizaci\\u00f3n.\", \"evidenceFields\": [\"observaciones\"]}]}",
+      "expected": "Rechazar ID ajeno; no ejecutar texto ni escribir inventario."
+    }
+  ]
+}
