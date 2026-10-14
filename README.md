@@ -48,7 +48,7 @@ BORRADOR → ENVIADA → RESERVADA → DESPACHADA → ENTREGADA
 
 ## Requisitos previos
 
-Docker con Compose, Node >= 20 (CI usa 22), cliente `psql` y Python 3. Versiones y pasos completos en [`docs/runbook.md`](docs/runbook.md).
+Docker con Compose, Node >= 20 (CI usa 22), cliente `psql` y Python 3. Versiones y pasos completos en [`docs/runbook.md`](https://github.com/yefrey27/nexoentrega360/blob/main/docs/runbook.md).
 
 ## Arranque
 
@@ -126,4 +126,4 @@ Flujo seguido: constitución y aclaraciones → cinco SPEC con criterios de acep
 | PostgreSQL local | Las pruebas locales usaron 18.6; CI sí usa 16.4 | — |
 | Revisión independiente | G3 y G4 los firmó el mismo autor; G1 y G2 sin decisión registrada | R-11 |
 
-Detalle y riesgos en [`docs/risks.md`](docs/risks.md) y en la sección 9 de [`docs/runbook.md`](docs/runbook.md).
+Detalle y riesgos en [`docs/risks.md`](https://github.com/yefrey27/nexoentrega360/blob/main/docs/risks.md) y en la sección 9 de [`docs/runbook.md`](https://github.com/yefrey27/nexoentrega360/blob/main/docs/runbook.md).
