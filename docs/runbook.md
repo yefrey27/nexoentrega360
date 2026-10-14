@@ -51,6 +51,7 @@ El producto sigue funcionando. Con `AI_PROVIDER=none` (por defecto) el coordinad
 ## 8. Problemas conocidos
 - `01-roles.sh` solo corre con volumen vacío; si falla la conexión de `nexo_app`, ejecutar `docker compose -f infra/docker-compose.yml down -v` y volver a arrancar (borra los datos locales).
 - `npm audit` reporta 2 vulnerabilidades altas en express 4.21.2; el check es `continue-on-error` y queda visible en el PR.
+- Las pruebas locales se ejecutaron con PostgreSQL 18.6 portable (sin Docker), no con la 16.4 fijada en el compose y en CI. La versión fijada se valida en CI; el arranque con Compose no se ha ejecutado en la máquina de desarrollo. Con ese PostgreSQL portable, `psql` debe estar en el PATH de Git Bash (`export PATH="$HOME/Downloads/pgsql/bin:$PATH"`) para que `migrate.sh` y `seed.sh` funcionen.
 
 ## 9. Gaps declarados
 - Sin comando único de arranque ni de verificación (RNF04).
