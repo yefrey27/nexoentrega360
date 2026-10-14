@@ -14,20 +14,20 @@ Los valores explícitos del enunciado prevalecen sobre cualquier propuesta o sug
 
 | Pregunta | ¿Requiere decisión del cliente? | Enviada (fecha UTC) | Respuesta (fecha UTC) |
 |----------|----------------------------------|---------------------|------------------------|
-| Q-01 | Sí | 2026-10-13 16:12 UTC | Sin respuesta |
-| Q-02 | Sí | 2026-10-13 16:12 UTC | Sin respuesta |
-| Q-03 | Sí | 2026-10-13 16:12 UTC | Sin respuesta |
-| Q-04 | Sí | 2026-10-13 16:12 UTC | Sin respuesta |
-| Q-05 | Sí | 2026-10-13 16:12 UTC | Sin respuesta |
+| Q-01 | Sí | No enviada | Sin respuesta |
+| Q-02 | Sí | No enviada | Sin respuesta |
+| Q-03 | Sí | No enviada | Sin respuesta |
+| Q-04 | Sí | No enviada | Sin respuesta |
+| Q-05 | Sí | No enviada | Sin respuesta |
 | Q-06 | No (decisión técnica, ADR-0003) | n/a | n/a |
-| Q-07 | Sí | 2026-10-13 16:12 UTC | Sin respuesta |
+| Q-07 | Sí | No enviada | Sin respuesta |
 | Q-08 | No (decisión del equipo) | n/a | n/a |
-| Q-09 | Sí | 2026-10-13 16:12 UTC | Sin respuesta |
+| Q-09 | Sí | No enviada | Sin respuesta |
 | Q-10 | No (decisión del equipo) | n/a | n/a |
 | Q-11 | No (decisión del equipo) | n/a | n/a |
-| Q-12 | Confirmación opcional (supuesto literal del enunciado; ver H1-06) | 2026-10-13 16:12 UTC | Sin respuesta |
-| Q-13 | Sí | 2026-10-13 16:12 UTC | Sin respuesta |
-| Q-14 | Sí | 2026-10-13 16:12 UTC | Sin respuesta |
+| Q-12 | Confirmación opcional (supuesto literal del enunciado; ver H1-06) | No enviada | Sin respuesta |
+| Q-13 | Sí | No enviada | Sin respuesta |
+| Q-14 | Sí | No enviada | Sin respuesta |
 
 La columna "Enviada" la completa una persona cuando realmente envía el mensaje a la docente. No se rellena de antemano.
 
