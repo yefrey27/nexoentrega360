@@ -51,12 +51,12 @@ Cada tarea indica resultado, archivos o módulos previstos, requisito y criterio
 
 | ID | Resultado | Archivos o módulos | Requisito y AC | Prueba | Depende de | Término | Estado |
 |----|-----------|--------------------|----------------|--------|------------|---------|--------|
-| T-17 | Interfaz de proveedor intercambiable y fixtures | módulo asistente, tests/fixtures/ai | RF10, RF12 | pruebas con fixtures | T-09 | provider fixture y none funcionan | pendiente |
-| T-18 | Validador de salida y resumen determinista | módulo asistente | RF11, RF12; AC-RF11-01 a 06 | pruebas de IA | T-17, T-A6 | salida inválida produce fallback | pendiente |
-| T-19 | Timeout de 5 s y manejo de fallo | módulo asistente | RF12; AC-RF12-01, 02 | pruebas de timeout y error | T-18 | fallback en menos de 6 s | pendiente |
-| T-20 | Aprobación solo del coordinador con auditoría | módulos asistente y auditoría | RF12, RF09; AC-RF12-05, 06 | API con base real | T-18, T-13 | evento de aprobación | pendiente |
+| T-17 | Interfaz de proveedor intercambiable y fixtures | módulo asistente, tests/fixtures/ai | RF10, RF12 | pruebas con fixtures | T-09 | provider fixture y none funcionan | hecha, evidencia: evidence/tests/t14-t23-run.txt, evidence/tests/ia-fixtures-20261014T064243Z.txt |
+| T-18 | Validador de salida y resumen determinista | módulo asistente | RF11, RF12; AC-RF11-01 a 06 | pruebas de IA | T-17, T-A6 | salida inválida produce fallback | hecha, evidencia: evidence/tests/t14-t23-run.txt, evidence/tests/ia-fixtures-20261014T064243Z.txt |
+| T-19 | Timeout de 5 s y manejo de fallo | módulo asistente | RF12; AC-RF12-01, 02 | pruebas de timeout y error | T-18 | fallback en menos de 6 s | hecha, evidencia: evidence/tests/t14-t23-run.txt, evidence/tests/ia-fixtures-20261014T064243Z.txt |
+| T-20 | Aprobación solo del coordinador con auditoría | módulos asistente y auditoría | RF12, RF09; AC-RF12-05, 06 | API con base real | T-18, T-13 | evento de aprobación | hecha, evidencia: evidence/tests/t14-t23-run.txt, evidence/tests/ia-fixtures-20261014T064243Z.txt |
 | T-21 | Una salida de LLM real o reproducción declarada | evidence/ai-log, tests/fixtures/ai/replay | RF12; AC-RF12-07 | prueba por el mismo adaptador | T-18 | origen declarado | pendiente |
-| T-22 | Pruebas de inyección en observaciones | tests | RF11; AC-RF11-07 | prueba de IA | T-18 | sin cambios de estado | pendiente |
+| T-22 | Pruebas de inyección en observaciones | tests | RF11; AC-RF11-07 | prueba de IA | T-18 | sin cambios de estado | hecha, evidencia: evidence/tests/t14-t23-run.txt, evidence/tests/ia-fixtures-20261014T064243Z.txt |
 
 ## Bloque F. Pruebas, CI y entrega
 
