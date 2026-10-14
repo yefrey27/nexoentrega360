@@ -1,0 +1,17 @@
+RNF04 - arranque desde clon limpio (VARIANTE SIN DOCKER: PostgreSQL portable, no Docker Compose)
+Fecha UTC: 2026-10-14T19:21:07Z | Node v24.21.0 | npm 11.19.0 | MINGW64_NT-10.0-19044
+PostgreSQL: postgres (PostgreSQL) 18.6 | Nota: la SPEC fija 16.4; el Compose NO se ejecutó en esta prueba
+Cloning into 'C:/Users/YANF/AppData/Local/Temp/tmp.jdnJIYfhFm/clon'...
+Switched to a new branch 'main'
+branch 'main' set up to track 'origin/main'.
+Commit probado: 0c2f13d3210849cc8ec054bc3bc2f4c52f92d7db
+Nota: el rol nexo_app (LOGIN) se creo a mano antes de migrar; en Docker lo crea infra/initdb/01-roles.sh
+CREATE ROLE
+aplicada 0001_init
+seed cargado: seeds/seed_small.sql
+
+added 84 packages in 4s
+GET /health = 200
+GET /ready  = 200
+Tiempo total desde 'git clone' hasta /ready=200: 20 s (incluye npm ci e initdb)
+Resultado: dentro del umbral de 900 s (15 min)
