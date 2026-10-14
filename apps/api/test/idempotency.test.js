@@ -65,7 +65,7 @@ test('misma clave con contenido distinto: 409 y la segunda solicitud no cambia',
   const antes = await stock('ORG-A', SKU);
   const r = await coord('POST', `/requests/${id2}/reserve`, null, h);
   assert.equal(r.status, 409);
-  assert.equal(r.body.error?.code ?? r.body.code, 'IDEMPOTENCY_KEY_REUSED');
+  assert.equal(r.body.error.code, 'IDEMPOTENCY_KEY_REUSED');
   assert.equal(await status(id2), 'ENVIADA');
   assert.deepEqual(await stock('ORG-A', SKU), antes);
 });
