@@ -33,7 +33,7 @@ El enunciado pide equipos ya conformados y un revisor distinto del autor. Mientr
 | 7 | Las reglas del enunciado no fueron modificadas por supuestos | Revisión humana | contrastar números: 1 a 10 líneas, 1 a 500, 100 por página, 20 solicitudes, 5 s, 600, 240, 5 recomendaciones, 24 h |
 | 8 | La constitution tiene reglas con forma de comprobación | Revisión humana | tabla de 18 reglas en specs/constitution.md |
 | 9 | Hay al menos seis preguntas con requisito, riesgo y propuesta | Verificado | 14 preguntas en docs/clarifications.md |
-| 10 | Las preguntas que requieren al cliente fueron enviadas con fecha UTC | **Pendiente** | docs/clarifications.md, tabla de estado de envío |
+| 10 | Las preguntas que requieren al cliente fueron enviadas con fecha UTC | **No cumple** | docs/clarifications.md, tabla de estado de envío; no se enviaron, se aplican supuestos |
 | 11 | Los supuestos provisionales tienen impacto y responsable | Revisión humana | docs/clarifications.md |
 | 12 | Ninguna respuesta de IA se presenta como decisión del cliente | Revisión humana | docs/clarifications.md |
 | 13 | SPEC, constitution y aclaraciones no contradicen el contrato OpenAPI ni los ADR | Revisión humana | contrastar con contracts/openapi.yaml y docs/adr |
